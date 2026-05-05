@@ -3,7 +3,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "424.3",
-    "label": "_",
+    "label": "put-in",
+    "text": "bridge (Route du Nord)"
+  },
+  {
+    "id": crypto.randomUUID(),
+    "km": "424.3",
+    "label": "🏕",
     "text": "bridge (Route du Nord)"
   },
   {
@@ -21,7 +27,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "422",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -33,7 +39,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "420.3",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right 487952 5622399 18U"
   },
   {
@@ -45,7 +51,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "410",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -75,7 +81,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "405",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -99,7 +105,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "401.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
@@ -123,7 +129,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "396.7",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the small island"
   },
   {
@@ -153,7 +159,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "391",
-    "label": "_GA",
+    "label": "🏕GA",
     "text": "GA campsite on the right bleberries"
   },
   {
@@ -213,7 +219,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "384",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -225,7 +231,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "383",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -315,7 +321,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "363.8",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island"
   },
   {
@@ -339,7 +345,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "360",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
@@ -381,13 +387,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "354.2",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right 438330 5621683 18U"
   },
   {
     "id": crypto.randomUUID(),
     "km": "351.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -417,7 +423,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "344.6",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
@@ -429,19 +435,19 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "344.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
     "id": crypto.randomUUID(),
     "km": "344.5",
-    "label": "_GB",
+    "label": "🏕GB",
     "text": "campsite on the right"
   },
   {
     "id": crypto.randomUUID(),
     "km": "344.3",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
@@ -459,7 +465,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "342.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island"
   },
   {
@@ -495,7 +501,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "336",
-    "label": "_",
+    "label": "🏕",
     "text": "indian camp on the right 421735 5619509 18U"
   },
   {
@@ -513,7 +519,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "324.2",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right"
   },
   {
@@ -531,13 +537,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "315.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right with old cabin ugly"
   },
   {
     "id": crypto.randomUUID(),
     "km": "314",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island"
   },
   {
@@ -573,13 +579,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "306.3",
-    "label": "_GB",
+    "label": "🏕GB",
     "text": "two campsites on islands"
   },
   {
     "id": crypto.randomUUID(),
     "km": "306.3",
-    "label": "_",
+    "label": "🏕",
     "text": "two campsites on islands"
   },
   {
@@ -615,13 +621,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "297",
-    "label": "_",
+    "label": "🏕",
     "text": "many potential campsites on the right"
   },
   {
     "id": crypto.randomUUID(),
     "km": "297",
-    "label": "_",
+    "label": "🏕",
     "text": "many potential campsites on the right"
   },
   {
@@ -651,7 +657,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "282",
-    "label": "_GC",
+    "label": "🏕GC",
     "text": "campsite on the right 378932 5628028 18U"
   },
   {
@@ -687,7 +693,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "278",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island"
   },
   {
@@ -699,7 +705,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "272",
-    "label": "_",
+    "label": "🏕",
     "text": ""
   },
   {
@@ -711,19 +717,19 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "266",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
     "id": crypto.randomUUID(),
     "km": "239",
-    "label": "_",
+    "label": "🏕",
     "text": ""
   },
   {
     "id": crypto.randomUUID(),
     "km": "232.2",
-    "label": "_",
+    "label": "🏕",
     "text": ""
   },
   {
@@ -747,7 +753,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "222.3",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
@@ -759,7 +765,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "220.9",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
@@ -795,13 +801,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "211.9",
-    "label": "_",
+    "label": "🏕",
     "text": ""
   },
   {
     "id": crypto.randomUUID(),
     "km": "211.7",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island below the waterfall 375434 5658189 18U"
   },
   {
@@ -825,7 +831,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "209.5",
-    "label": "_",
+    "label": "🏕",
     "text": "indian campsite on the right side"
   },
   {
@@ -837,7 +843,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "205",
-    "label": "_?",
+    "label": "🏕?",
     "text": "beaches"
   },
   {
@@ -849,19 +855,19 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "200",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
     "id": crypto.randomUUID(),
     "km": "195.1",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
     "id": crypto.randomUUID(),
     "km": "194.8",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
@@ -873,13 +879,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "194.5",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
     "id": crypto.randomUUID(),
     "km": "191",
-    "label": "_",
+    "label": "🏕",
     "text": "beaches"
   },
   {
@@ -903,7 +909,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "187.8",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
@@ -915,13 +921,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "186.5",
-    "label": "_GB",
+    "label": "🏕GB",
     "text": "campsite on the island"
   },
   {
     "id": crypto.randomUUID(),
     "km": "185.3",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right shore"
   },
   {
@@ -951,7 +957,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "180",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
@@ -963,25 +969,25 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "178.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
     "id": crypto.randomUUID(),
     "km": "177.7",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
     "id": crypto.randomUUID(),
     "km": "177",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left"
   },
   {
     "id": crypto.randomUUID(),
     "km": "174.7",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island"
   },
   {
@@ -1017,13 +1023,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "157",
-    "label": "_GC",
+    "label": "🏕GC",
     "text": "campsite on the left shore"
   },
   {
     "id": crypto.randomUUID(),
     "km": "152.3",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the island"
   },
   {
@@ -1089,8 +1095,14 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "140.5",
-    "label": "_",
-    "text": "James Bay Road bridge (division point of Uppar & Lower Broadback) campsite on the right"
+    "label": "🏕",
+    "text": "campsite on the right"
+  },
+  {
+    "id": crypto.randomUUID(),
+    "km": "140.4",
+    "label": "put-in",
+    "text": "James Bay Road bridge (division point of Upper & Lower Broadback) campsite on the right"
   },
   {
     "id": crypto.randomUUID(),
@@ -1131,13 +1143,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "120",
-    "label": "_4D",
+    "label": "🏕4D",
     "text": "campsite on the beach on the left shore"
   },
   {
     "id": crypto.randomUUID(),
     "km": "117.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left shore 307104 5668837 18U"
   },
   {
@@ -1161,7 +1173,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "113.6",
-    "label": "_",
+    "label": "🏕",
     "text": ""
   },
   {
@@ -1191,13 +1203,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "107",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the beach on the right shore"
   },
   {
     "id": crypto.randomUUID(),
     "km": "106",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the both sides of the river"
   },
   {
@@ -1215,7 +1227,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "104.4",
-    "label": "_GA",
+    "label": "🏕GA",
     "text": ""
   },
   {
@@ -1227,7 +1239,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "103.5",
-    "label": "_",
+    "label": "🏕",
     "text": "small beach"
   },
   {
@@ -1275,7 +1287,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "100",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite \"The Dab\" on the left shore"
   },
   {
@@ -1305,7 +1317,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "93.6",
-    "label": "_",
+    "label": "🏕",
     "text": "ledge 2 campsite on the left shore"
   },
   {
@@ -1341,19 +1353,19 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "90",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left shore"
   },
   {
     "id": crypto.randomUUID(),
     "km": "88.8",
-    "label": "_3C",
+    "label": "🏕3C",
     "text": ""
   },
   {
     "id": crypto.randomUUID(),
     "km": "88.7",
-    "label": "_",
+    "label": "🏕",
     "text": "292063 5681734"
   },
   {
@@ -1383,7 +1395,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "83.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left shore"
   },
   {
@@ -1395,7 +1407,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "73.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left shore"
   },
   {
@@ -1413,7 +1425,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "71.4",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left shore"
   },
   {
@@ -1461,7 +1473,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "64.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right shore"
   },
   {
@@ -1491,7 +1503,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "61.5",
-    "label": "_",
+    "label": "🏕",
     "text": "campsites on both sides of the river"
   },
   {
@@ -1509,7 +1521,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "57.4",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the left shore 683782 5683245 17U"
   },
   {
@@ -1527,7 +1539,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "55.5",
-    "label": "_",
+    "label": "🏕",
     "text": "small campsite on the river right"
   },
   {
@@ -1629,7 +1641,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "39.8",
-    "label": "_",
+    "label": "🏕",
     "text": "campsite on the right shore 668704 5687171 17U"
   },
   {
@@ -1683,13 +1695,13 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "21.2",
-    "label": "_",
+    "label": "🏕",
     "text": "campsites on both sides of the river"
   },
   {
     "id": crypto.randomUUID(),
     "km": "19",
-    "label": "_5D",
+    "label": "🏕5D",
     "text": "campsite on the left shore"
   },
   {
@@ -1701,7 +1713,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "0",
-    "label": "",
+    "label": "put-in",
     "text": "Waskaganish dock 656387 5706765 17U"
   }
 ]

@@ -29,7 +29,7 @@ export default function River ({ features }: RiverProps) {
     <table className='w-full'>
       <thead>
         <tr>
-          <th>zzz</th>
+          <th></th>
           <th>km</th>
           <th>label</th>
           <th>text</th>
@@ -38,7 +38,7 @@ export default function River ({ features }: RiverProps) {
         </tr>
       </thead>
       <tbody>{features.map(({ id, km, label, text }) => {
-        if (label.indexOf('_') === -1) {
+        if (label.indexOf('🏕') === -1 && label.indexOf('put-in') === -1) {
           return null
         }
         return (
@@ -76,7 +76,7 @@ function distanceFromLastChecked(km: number, sortedChecked: number[]) {
   }
   const distance = lastKm - km
 
-  return `~${Math.round(distance)} km`
+  return lastKm === Infinity ? null : `~${Math.round(distance)} km`
 }
 
 function featuresEncountered(km: number, sortedChecked: number[], features: RiverFeature[]) {
@@ -101,7 +101,8 @@ function featuresEncountered(km: number, sortedChecked: number[], features: Rive
     if (featureKm > km
       && featureKm <= lastKm
       && feature.label !== ''
-      && feature.label.indexOf('_') === -1) {
+      && feature.label.indexOf('🏕') === -1
+      && feature.label.indexOf('put-in') === -1) {
         if (!acc[feature.label]) {
           acc[feature.label] = 0
         }

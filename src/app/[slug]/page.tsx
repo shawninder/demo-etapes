@@ -1,5 +1,5 @@
-import riverFeatures from './features'
 import River from '@/components/River'
+import riverFeatures from './features'
 
 type RiverPageProps = {
   slug: string
@@ -11,6 +11,7 @@ export default async function RiverPage ({ params }: {
   const { slug } = await params
   const features = riverFeatures[slug]
   
+  console.log({ slug, features })
   
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
