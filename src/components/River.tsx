@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import type { RiverFeature } from "@/app/[slug]/features"
 
 export type RiverProps = {
@@ -26,35 +26,32 @@ export default function River ({ features }: RiverProps) {
     .sort((a, b) => b - a)
 
   return (
-    <table className='w-full'>
-      <thead>
-        <tr>
-          <th></th>
-          <th>km</th>
-          <th>label</th>
-          <th>text</th>
-          <th>distance</th>
-          <th>features</th>
-        </tr>
-      </thead>
-      <tbody>{features.map(({ id, km, label, text }) => {
-        if (label.indexOf('🏕') === -1 && label.indexOf('put-in') === -1) {
+    <div className='w-full pl-5 feature-list'>
+      {features.map(({ id, km, label, text }) => {
+        if (label === '') {
           return null
         }
+        const kmsTravelled = checked[km] ? distanceFromLastChecked(parseFloat(km), sortedChecked) : null
+        const daySummary = checked[km] ? featuresEncountered(parseFloat(km), sortedChecked, features) : null
         return (
-          <tr key={id}>
-            <td>
-              <input type='checkbox' onChange={onChange} data-km={km} />
-            </td>
-            <td>{km}</td>
-            <td>{label}</td>
-            <td>{text}</td>
-            <td>{checked[km] ? distanceFromLastChecked(parseFloat(km), sortedChecked) : null}</td>
-            <td>{checked[km] ? featuresEncountered(parseFloat(km), sortedChecked, features) : null}</td>
-          </tr>
+          <div key={id}>
+            {kmsTravelled || daySummary ? (
+              <div>
+                <span className='counter'></span>
+                {kmsTravelled}
+                {daySummary}
+              </div>
+            ) : null}
+            <div title={text}>
+              <span className='text-xs text-muted w-16 inline-block font-mono'>km {parseFloat(km).toFixed(1)}</span>
+              {label.indexOf('🏕') !== -1 || label.indexOf('put-in') !== -1 ? (<input type='checkbox' onChange={onChange} data-km={km} />) : null}
+              {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'R' || label[0] === 'E' ? '🌊' : null} {label}
+              {" – "}{text}
+            </div>
+          </div>
         )
-      })}</tbody>
-    </table>
+      })}
+    </div>
   )
 }
 
