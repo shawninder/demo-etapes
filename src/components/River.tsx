@@ -1,14 +1,27 @@
 'use client'
 
-import { Fragment, useState } from "react"
+import { useEffect, useState } from "react"
 import type { RiverFeature } from "@/app/[slug]/features"
 
 export type RiverProps = {
   features: RiverFeature[]
 }
 
-export default function River ({ features }: RiverProps) {
+export default function River ({ features = [] }: RiverProps) {
+  const [hydrated, setHydrated] = useState(false)
   const [checked, setChecked] = useState<Record<string, boolean>>({})
+
+  useEffect(() => {
+    const stored = localStorage.getItem('checked')
+    if (stored) {
+      setChecked(JSON.parse(stored))
+    }
+    setHydrated(true)
+  }, [])
+  useEffect(() => {
+    if (!hydrated) return;
+    localStorage.setItem('checked', JSON.stringify(checked))
+  }, [checked, hydrated])
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const km = event.target.dataset.km
@@ -25,6 +38,7 @@ export default function River ({ features }: RiverProps) {
     .map(([km]) => parseFloat(km))
     .sort((a, b) => b - a)
 
+  let dayCounter = 1
   return (
     <div className='w-full pl-5 feature-list'>
       {features.map(({ id, km, label, text }) => {
@@ -35,16 +49,24 @@ export default function River ({ features }: RiverProps) {
         const daySummary = checked[km] ? featuresEncountered(parseFloat(km), sortedChecked, features) : null
         return (
           <div key={id}>
-            {kmsTravelled || daySummary ? (
+            {(label.indexOf('🏕') !== -1 || label.indexOf('🚙') !== -1) && (kmsTravelled || daySummary) ? (
               <div className='text-right'>
-                <span className='counter'></span>
+                <span>Jour {dayCounter++}: </span>
                 {kmsTravelled}{" – "}{daySummary}
               </div>
             ) : null}
             <div title={text}>
               <span className='text-xs text-muted w-16 inline-block font-mono'>km {parseFloat(km).toFixed(1)}</span>
-              {label.indexOf('🏕') !== -1 || label.indexOf('🚙') !== -1 ? (<input type='checkbox' onChange={onChange} data-km={km} />) : null}
-              {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'R' || label[0] === 'E' ? '🌊' : null} {label}
+              {label.indexOf('🏕') !== -1 || label.indexOf('🚙') !== -1
+                ? (
+                  <input type='checkbox' checked={checked[km] || false} onChange={onChange} data-km={km} />
+                )
+                : null
+              }
+              {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'R' || label[0] === 'E'
+                ? '🌊'
+                : null
+              } {label}
               {" – "}<span className='italic text-muted'>{text}</span>
             </div>
           </div>

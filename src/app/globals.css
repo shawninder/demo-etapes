@@ -27,13 +27,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-.feature-list {
-  counter-reset: count 1;
-}
-.feature-list .counter {
-  counter-increment: count 1;
-}
-.feature-list .counter::before {
-  content: "Jour " counter(count) ": ";
-}
