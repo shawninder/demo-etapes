@@ -36,17 +36,16 @@ export default function River ({ features }: RiverProps) {
         return (
           <div key={id}>
             {kmsTravelled || daySummary ? (
-              <div>
+              <div className='text-right'>
                 <span className='counter'></span>
-                {kmsTravelled}
-                {daySummary}
+                {kmsTravelled}{" – "}{daySummary}
               </div>
             ) : null}
             <div title={text}>
               <span className='text-xs text-muted w-16 inline-block font-mono'>km {parseFloat(km).toFixed(1)}</span>
-              {label.indexOf('🏕') !== -1 || label.indexOf('put-in') !== -1 ? (<input type='checkbox' onChange={onChange} data-km={km} />) : null}
+              {label.indexOf('🏕') !== -1 || label.indexOf('🚙') !== -1 ? (<input type='checkbox' onChange={onChange} data-km={km} />) : null}
               {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'R' || label[0] === 'E' ? '🌊' : null} {label}
-              {" – "}{text}
+              {" – "}<span className='italic text-muted'>{text}</span>
             </div>
           </div>
         )
@@ -99,7 +98,7 @@ function featuresEncountered(km: number, sortedChecked: number[], features: Rive
       && featureKm <= lastKm
       && feature.label !== ''
       && feature.label.indexOf('🏕') === -1
-      && feature.label.indexOf('put-in') === -1) {
+      && feature.label.indexOf('🚙') === -1) {
         if (!acc[feature.label]) {
           acc[feature.label] = 0
         }

@@ -3,7 +3,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "424.3",
-    "label": "put-in",
+    "label": "🚙",
     "text": "bridge (Route du Nord)"
   },
   {
@@ -1101,7 +1101,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "140.4",
-    "label": "put-in",
+    "label": "🚙",
     "text": "James Bay Road bridge (division point of Upper & Lower Broadback) campsite on the right"
   },
   {
@@ -1713,7 +1713,7 @@ export default [
   {
     "id": crypto.randomUUID(),
     "km": "0",
-    "label": "put-in",
+    "label": "🚙",
     "text": "Waskaganish dock 656387 5706765 17U"
   }
 ]

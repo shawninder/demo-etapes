@@ -35,5 +35,5 @@ body {
   counter-increment: count 1;
 }
 .feature-list .counter::before {
-  content: "J." counter(count) " ";
+  content: "Jour " counter(count) ": ";
 }
