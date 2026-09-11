@@ -5,6 +5,7 @@ import type { RiverFeature } from "@/app/[slug]/features"
 import { Item, ItemGroup, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
 import { compareFeatureLevel, getDistanceLevelClassName, getFeatureLevelClassName } from "@/lib/featureLevel"
 import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
 
 export type RiverProps = {
   features: RiverFeature[]
@@ -70,7 +71,9 @@ export default function River ({ features = [] }: RiverProps) {
               {isCampable
                 ? (
                   <ItemActions>
-                    <input type='checkbox' checked={checked[km] || false} onChange={onChange} data-km={km} />
+                    <label className='w-16 text-right'>
+                      <Input type='checkbox' checked={checked[km] || false} onChange={onChange} data-km={km} className='size-6' />
+                    </label>
                   </ItemActions>
                 )
                 : null
