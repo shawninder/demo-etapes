@@ -27,15 +27,17 @@ export function compareFeatureLevel (a: string, b: string): number {
   return rankA - rankB
 }
 
-const featureLevelClassName: Record<FeatureLevel, string> = {
-  helpful: 'bg-level-helpful-bg border-level-helpful-border text-level-helpful-text',
-  neutral: 'bg-level-neutral-bg border-level-neutral-border text-level-neutral-text',
-  fun: 'bg-level-fun-bg border-level-fun-border text-level-fun-text',
-  active: 'bg-level-active-bg border-level-active-border text-level-active-text',
-  engaging: 'bg-level-engaging-bg border-level-engaging-border text-level-engaging-text',
-  demanding: 'bg-level-demanding-bg border-level-demanding-border text-level-demanding-text',
-  extreme: 'bg-level-extreme-bg border-level-extreme-border text-level-extreme-text',
-  impassable: 'bg-level-impassable-bg border-level-impassable-border text-level-impassable-text',
+type FeatureLevelClassNames = [bg: string, border: string, text: string]
+
+const featureLevelClassNames: Record<FeatureLevel, FeatureLevelClassNames> = {
+  helpful: ['bg-level-helpful-bg', 'border-level-helpful-border', 'text-level-helpful-text'],
+  neutral: ['bg-level-neutral-bg', 'border-level-neutral-border', 'text-level-neutral-text'],
+  fun: ['bg-level-fun-bg', 'border-level-fun-border', 'text-level-fun-text'],
+  active: ['bg-level-active-bg', 'border-level-active-border', 'text-level-active-text'],
+  engaging: ['bg-level-engaging-bg', 'border-level-engaging-border', 'text-level-engaging-text'],
+  demanding: ['bg-level-demanding-bg', 'border-level-demanding-border', 'text-level-demanding-text'],
+  extreme: ['bg-level-extreme-bg', 'border-level-extreme-border', 'text-level-extreme-text'],
+  impassable: ['bg-level-impassable-bg', 'border-level-impassable-border', 'text-level-impassable-text'],
 }
 
 const rapidLevels: (FeatureLevel | undefined)[] = [undefined, 'fun', 'active', 'engaging', 'demanding', 'extreme', 'impassable']
@@ -74,6 +76,26 @@ export function getFeatureLevel (label: string): FeatureLevel | null {
 
 export function getFeatureLevelClassName (label: string): string {
   const level = getFeatureLevel(label)
-  console.log({ label, level, className: level ? featureLevelClassName[level] : '' })
-  return level ? featureLevelClassName[level] : ''
+  return level ? featureLevelClassNames[level].join(' ') : ''
+}
+
+const distanceLevelThresholds: [number, FeatureLevel][] = [
+  [5, 'helpful'],
+  [10, 'neutral'],
+  [15, 'fun'],
+  [20, 'active'],
+  [35, 'engaging'],
+  [50, 'demanding'],
+  [60, 'extreme'],
+]
+
+export function getDistanceLevel (km: number): FeatureLevel {
+  for (const [max, level] of distanceLevelThresholds) {
+    if (km < max) return level
+  }
+  return 'impassable'
+}
+
+export function getDistanceLevelClassName (km: number): string {
+  return featureLevelClassNames[getDistanceLevel(km)][2]
 }

@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useState } from "react"
 import type { RiverFeature } from "@/app/[slug]/features"
 import { Item, ItemGroup, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
-import { compareFeatureLevel, getFeatureLevelClassName } from "@/lib/featureLevel"
+import { compareFeatureLevel, getDistanceLevelClassName, getFeatureLevelClassName } from "@/lib/featureLevel"
 import { cn } from "@/lib/utils"
 
 export type RiverProps = {
@@ -51,11 +51,12 @@ export default function River ({ features = [] }: RiverProps) {
           return null
         }
         const kmsTravelled = checked[km] ? distanceFromLastChecked(parseFloat(km), sortedChecked) : null
+        const kmsTravelledLevelClassName = kmsTravelled !== null ? getDistanceLevelClassName(kmsTravelled) : ''
         const daySummary = checked[km] ? countFeaturesEncountered(parseFloat(km), sortedChecked, features) : null
         const isCampable = label.indexOf('🏕') !== -1 || label.indexOf('🚙') !== -1
         return (
           <Fragment key={id}>
-            <Item variant='outline' title={text} className='py-0.5 rounded-none hover:bg-muted'>
+            <Item variant='outline' title={text} className='py-0.5 rounded-none hover:bg-muted bg-accent/50'>
               <ItemMedia variant='icon' className='text-xs text-muted-foreground w-16 inline-block font-mono'>km {parseFloat(km).toFixed(1)}</ItemMedia>
               <ItemContent className='flex flex-row items-center gap-2'>
                 <ItemTitle className='w-14'>
@@ -64,7 +65,7 @@ export default function River ({ features = [] }: RiverProps) {
                     : null
                   }{" "}{label}
                 </ItemTitle>
-                <ItemDescription className='italic text-muted-foreground'>{text}</ItemDescription>
+                <ItemDescription className='text-foreground'>{text}</ItemDescription>
               </ItemContent>
               {isCampable
                 ? (
@@ -78,13 +79,13 @@ export default function River ({ features = [] }: RiverProps) {
             {isCampable && (kmsTravelled || daySummary) ? (
               <Item className=''>
                 <ItemContent className='items-center'>
-                  {kmsTravelled && <ItemTitle className='text-center'>totalisant <span className='text-lg'>{kmsTravelled}</span> avec </ItemTitle>}
+                  {kmsTravelled !== null && <ItemTitle className='text-center'>totalisant <span className={cn('text-lg', kmsTravelledLevelClassName)}>{kmsTravelled} km</span> avec </ItemTitle>}
                   <ItemGroup className='flex-row flex-wrap justify-center'>
                     {daySummary && Object.entries(daySummary)
                       .sort(([a], [b]) => compareFeatureLevel(a, b))
                       .map(([label, count]) => (
                       <Item key={label} className='flex flex-row items-center gap-2 w-fit'>
-                        <ItemTitle><span className=''>{count}{" "}⨉</span> <span className={cn('text-lg border border-accent inline-block p-2 rounded', getFeatureLevelClassName(label))}>{label}</span></ItemTitle>
+                        <ItemTitle><span className='font-bold'>{count}</span>{" "}⨉ <span className={cn('text-lg border border-accent inline-block p-2 rounded', getFeatureLevelClassName(label))}>{label}</span></ItemTitle>
                       </Item>
                     ))}
                   </ItemGroup>
@@ -119,7 +120,7 @@ function distanceFromLastChecked(km: number, sortedChecked: number[]) {
   }
   const distance = lastKm - km
 
-  return lastKm === Infinity ? null : `${Math.round(10 * distance)/10} km`
+  return lastKm === Infinity ? null : Math.round(10 * distance) / 10
 }
 
 function countFeaturesEncountered(km: number, sortedChecked: number[], features: RiverFeature[]) {
