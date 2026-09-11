@@ -8,6 +8,25 @@ export type FeatureLevel =
   | 'extreme'
   | 'impassable'
 
+const featureLevelOrder: FeatureLevel[] = [
+  'helpful',
+  'neutral',
+  'fun',
+  'active',
+  'engaging',
+  'demanding',
+  'extreme',
+  'impassable',
+]
+
+export function compareFeatureLevel (a: string, b: string): number {
+  const levelA = getFeatureLevel(a)
+  const levelB = getFeatureLevel(b)
+  const rankA = levelA ? featureLevelOrder.indexOf(levelA) : -1
+  const rankB = levelB ? featureLevelOrder.indexOf(levelB) : -1
+  return rankA - rankB
+}
+
 const featureLevelClassName: Record<FeatureLevel, string> = {
   helpful: 'bg-level-helpful-bg border-level-helpful-border text-level-helpful-text',
   neutral: 'bg-level-neutral-bg border-level-neutral-border text-level-neutral-text',
