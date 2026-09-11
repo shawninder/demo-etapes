@@ -3,6 +3,8 @@
 import { Fragment, useEffect, useState } from "react"
 import type { RiverFeature } from "@/app/[slug]/features"
 import { Item, ItemGroup, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
+import { getFeatureLevelClassName } from "@/lib/featureLevel"
+import { cn } from "@/lib/utils"
 
 export type RiverProps = {
   features: RiverFeature[]
@@ -57,7 +59,7 @@ export default function River ({ features = [] }: RiverProps) {
               <ItemMedia variant='icon' className='text-xs text-muted-foreground w-16 inline-block font-mono'>km {parseFloat(km).toFixed(1)}</ItemMedia>
               <ItemContent className='flex flex-row items-center gap-2'>
                 <ItemTitle className='w-14'>
-                  {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'R' || label[0] === 'E'
+                  {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'S' || label[0] === 'E'
                     ? '🌊'
                     : null
                   }{" "}{label}
@@ -75,19 +77,15 @@ export default function River ({ features = [] }: RiverProps) {
             </Item>
             {isCampable && (kmsTravelled || daySummary) ? (
               <Item className=''>
-                <ItemContent>
-                  <ItemTitle>Sommaire: </ItemTitle>
-                  <ItemDescription>
-                    <span>{kmsTravelled}</span>
-                    <span>{" avec "}</span>
-                    <ItemGroup className='flex-row w-fit'>
-                      {daySummary && Object.entries(daySummary).map(([label, count]) => (
-                        <Item key={label} className='flex flex-row items-center gap-2'>
-                          <ItemTitle><span className=''>{count}{" "}⨉</span> <span className='text-lg border border-accent inline-block p-2 rounded'>{label}</span></ItemTitle>
-                        </Item>
-                      ))}
-                    </ItemGroup>
-                  </ItemDescription>
+                <ItemContent className='items-center'>
+                  {kmsTravelled && <ItemTitle className='text-center'>totalisant <span className='text-lg'>{kmsTravelled}</span> avec </ItemTitle>}
+                  <ItemGroup className='flex-row flex-wrap justify-center'>
+                    {daySummary && Object.entries(daySummary).map(([label, count]) => (
+                      <Item key={label} className='flex flex-row items-center gap-2 w-fit'>
+                        <ItemTitle><span className=''>{count}{" "}⨉</span> <span className={cn('text-lg border border-accent inline-block p-2 rounded', getFeatureLevelClassName(label))}>{label}</span></ItemTitle>
+                      </Item>
+                    ))}
+                  </ItemGroup>
                 </ItemContent>
               </Item>
             ) : null}
@@ -157,6 +155,6 @@ function countFeaturesEncountered(km: number, sortedChecked: number[], features:
 
 function Day ({ dayCounter }: { dayCounter: number }) {
   return (
-    <Item className='font-bold justify-center'>Jour {dayCounter}</Item>
+    <Item className='font-bold justify-center text-lg'>Jour {dayCounter}</Item>
   )
 }
