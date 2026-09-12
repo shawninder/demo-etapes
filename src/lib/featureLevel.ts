@@ -50,6 +50,7 @@ function ledgeLevel (classNum: number): FeatureLevel {
 
 const unratedTypeLevels: Record<string, FeatureLevel> = {
   EV: 'helpful',
+  P: 'active',
   K: 'impassable',
   C: 'impassable',
 }

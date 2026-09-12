@@ -45,7 +45,7 @@ export default function River ({ features = [] }: RiverProps) {
   let dayCounter = 1
 
   return (
-    <ItemGroup className='w-full feature-list gap-0'>
+    <ItemGroup className='w-full max-w-2xl feature-list gap-0 self-center'>
       <Day dayCounter={dayCounter++} />
       {features.map(({ id, km, label, text }) => {
         if (label === '') {
