@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import River from '@/components/River'
 import riverFeatures from './features'
 
@@ -27,4 +28,13 @@ export function generateStaticParams() {
   return [
     { slug: 'broadback' }
   ]
+}
+
+export async function generateMetadata({ params }: {
+  params: Promise<RiverPageProps>
+}): Promise<Metadata> {
+  const { slug } = await params
+  return {
+    title: `Rivière ${slug[0].toUpperCase()}${slug.slice(1)}`
+  }
 }
