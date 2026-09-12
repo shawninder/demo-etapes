@@ -9,7 +9,7 @@ export default async function RiverPage ({ params }: {
   params: Promise<RiverPageProps>
 }) {
   const { slug } = await params
-  const features = riverFeatures[slug]
+  const features = riverFeatures[slug].map(({ ...keys }) => ({ ...keys, id: crypto.randomUUID() }))
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
