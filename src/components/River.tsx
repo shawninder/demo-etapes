@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 
 export type RiverProps = {
-  features: RiverFeature[]
+  features: (RiverFeature & { id: string })[]
 }
 
 const defaultShowRapids = true

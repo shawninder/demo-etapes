@@ -1,7 +1,6 @@
 import broadback from './broadback'
 
 export type RiverFeature = {
-  id: string
   km: string
   label: string
   text: string
