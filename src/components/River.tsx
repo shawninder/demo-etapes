@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react"
 import type { RiverFeature } from "@/app/[slug]/features"
-import { Item, ItemGroup, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
+import { Item, ItemGroup, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle, ItemSeparator } from "@/components/ui/item"
 import { compareFeatureLevel, getDistanceLevelClassName, getFeatureLevelClassName } from "@/lib/featureLevel"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
@@ -11,9 +11,16 @@ export type RiverProps = {
   features: RiverFeature[]
 }
 
+const defaultShowRapids = true
+
 export default function River ({ features = [] }: RiverProps) {
   const [hydrated, setHydrated] = useState(false)
   const [checked, setChecked] = useState<Record<string, boolean>>({})
+  const [showRapids, setShowRapids] = useState<boolean>(defaultShowRapids)
+
+  function toggleShowRapids () {
+    setShowRapids((prev) => !prev)
+  }
 
   useEffect(() => {
     const stored = localStorage.getItem('checked')
@@ -46,6 +53,23 @@ export default function River ({ features = [] }: RiverProps) {
 
   return (
     <ItemGroup className='w-full max-w-2xl feature-list gap-0 self-center'>
+      <Item variant='muted' className='py-0.5'>
+          <label htmlFor='showRapidsCheckbox'>
+            🌊
+          </label>
+          <ItemActions>
+            <Input id='showRapidsCheckbox' type="checkbox" onChange={toggleShowRapids} defaultChecked={showRapids} />
+          </ItemActions>
+          <ItemContent className='flex-row'>
+            <ItemTitle></ItemTitle>
+            <ItemDescription>
+              <label htmlFor='showRapidsCheckbox'>
+                Afficher les rapides
+              </label>
+            </ItemDescription>
+          </ItemContent>
+      </Item>
+      <ItemSeparator className='bg-accent-foreground' />
       <Day dayCounter={dayCounter++} />
       {features.map(({ id, km, label, text }) => {
         if (label === '') {
@@ -55,16 +79,17 @@ export default function River ({ features = [] }: RiverProps) {
         const kmsTravelledLevelClassName = kmsTravelled !== null ? getDistanceLevelClassName(kmsTravelled) : ''
         const daySummary = checked[km] ? countFeaturesEncountered(parseFloat(km), sortedChecked, features) : null
         const isCampable = label.indexOf('🏕') !== -1 || label.indexOf('🚙') !== -1
+
         return (
           <Fragment key={id}>
-            <Item variant='outline' title={text} className='py-0.5 rounded-none hover:bg-muted bg-accent/50'>
+            <Item variant='outline' title={text} className={cn('py-0.5 rounded-none hover:bg-muted bg-accent/50', !showRapids && !isCampable ? "hidden" : "")}>
               <ItemMedia variant='icon' className='text-xs text-muted-foreground w-16 inline-block font-mono'>km {parseFloat(km).toFixed(1)}</ItemMedia>
               <ItemContent className='flex flex-row items-center gap-2'>
                 <ItemTitle className='w-14'>
                   {label[0] === 'R' || label[0] === 'C' || label[0] === 'L' || label[0] === 'S' || label[0] === 'E'
                     ? '🌊'
                     : null
-                  }{" "}{label}
+                  }{" "}{label}
                 </ItemTitle>
                 <ItemDescription className='text-foreground'>{text}</ItemDescription>
               </ItemContent>
@@ -94,6 +119,9 @@ export default function River ({ features = [] }: RiverProps) {
                   </ItemGroup>
                 </ItemContent>
               </Item>
+            ) : null}
+            {isCampable && (kmsTravelled || daySummary) ? (
+              <ItemSeparator className='bg-accent-foreground' />
             ) : null}
             {isCampable && (kmsTravelled || daySummary) ? (
               <Day dayCounter={dayCounter++} />
