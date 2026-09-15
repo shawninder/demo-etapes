@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { MessageCircleMore } from "lucide-react";
 import Link from "next/link";
+import { Geist, Geist_Mono } from "next/font/google";
+import { MessageCircleMore } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,15 +32,23 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans bg-background flex flex-col items-center">
-        <main className="w-full max-w-2xl flex flex-col">{children}</main>
-        <footer className="fixed bottom-1/12 right-1/12">
+      <body className="bg-background flex min-h-full flex-col items-center font-sans">
+        <main className="flex w-full max-w-2xl flex-col">{children}</main>
+        <footer className="my-4 w-full max-w-2xl">
           <Link
-            href=""
+            href="https://docs.google.com/forms/d/e/1FAIpQLScOsLgjGb0QD1r621ZM4k7vkjsRDu8dpeFQcJyX77DF72s1tw/viewform?usp=publish-editor"
             title="contact"
-            className="cursor-pointer hover:text-level-helpful-text"
+            target="_blank"
+            className="mb-8 w-full"
           >
-            <MessageCircleMore />
+            <Button
+              variant="ghost"
+              size="lg"
+
+              className="hover:text-level-helpful-text 2xs:py-8 h-fit w-full cursor-pointer py-2 whitespace-normal"
+            >
+              <MessageCircleMore className="size-5" />
+            </Button>
           </Link>
         </footer>
       </body>

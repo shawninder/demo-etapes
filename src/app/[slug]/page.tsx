@@ -27,11 +27,14 @@ export default async function RiverPage({
 
   return (
     <>
-      <h1 className="text-xl sm:text-3xl font-semibold leading-10 tracking-tight text-foreground capitalize text-center w-full my-2 sm:my-16">
-        <Link href="/" className="hover:text-level-neutral-text">
+      <h1 className="text-foreground my-2 w-full text-center leading-10 font-semibold tracking-tight capitalize 2xl:my-16">
+        <Link
+          href="/"
+          className="hover:text-level-neutral-text 2xs:w-fit mx-auto block"
+        >
           <Item>
             <ItemContent>
-              <ItemTitle>{slug}</ItemTitle>
+              <ItemTitle className="2xs:text-3xl">{slug}</ItemTitle>
             </ItemContent>
             <ItemActions>
               <ChevronDown className="inline size-3 sm:size-6" />

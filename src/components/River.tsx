@@ -66,14 +66,9 @@ export default function River({ features = [] }: RiverProps) {
 
   return (
     <ItemGroup className="feature-list w-full max-w-2xl gap-0 self-center">
-      <Item variant="outline" className="4xs:flex-row my-4 flex-col py-0.5">
-        <ItemContent>
-          <ItemDescription>
-            <label htmlFor="showRapidsCheckbox">Afficher les rapides</label>
-          </ItemDescription>
-        </ItemContent>
+      <Item className="4xs:flex-row 4xs:justify-end my-4 flex-col py-0.5">
+        <ItemTitle>🌊</ItemTitle>
         <ItemActions>
-          <label htmlFor="showRapidsCheckbox">🌊</label>
           <Switch
             id="showRapidsSwitch"
             onCheckedChange={toggleShowRapids}
