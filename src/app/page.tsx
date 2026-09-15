@@ -24,6 +24,7 @@ export default function Home() {
         <Link
           target="_blank"
           href="https://docs.google.com/forms/d/e/1FAIpQLSehHnLfEFqB4ANk8DUzP0hUmhn4uB1yTEa5eaQ71puT7r2bqQ/viewform?usp=publish-editor"
+          title="Demander une autre rivière"
         >
           <Button
             variant="ghost"

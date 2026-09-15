@@ -37,7 +37,7 @@ export default function RootLayout({
         <footer className="my-4 w-full max-w-2xl">
           <Link
             href="https://docs.google.com/forms/d/e/1FAIpQLScOsLgjGb0QD1r621ZM4k7vkjsRDu8dpeFQcJyX77DF72s1tw/viewform?usp=publish-editor"
-            title="contact"
+            title="Feeback"
             target="_blank"
             className="mb-8 w-full"
           >
