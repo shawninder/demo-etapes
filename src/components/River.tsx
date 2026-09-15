@@ -8,7 +8,6 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
-  ItemMedia,
   ItemTitle,
   ItemSeparator,
 } from "@/components/ui/item";
@@ -19,6 +18,7 @@ import {
 } from "@/lib/featureLevel";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 
 export type RiverProps = {
   features: (RiverFeature & { id: string })[];
@@ -65,38 +65,39 @@ export default function River({ features = [] }: RiverProps) {
   let dayCounter = 1;
 
   return (
-    <ItemGroup className="w-full max-w-2xl feature-list gap-0 self-center">
-      <Item variant="muted" className="py-0.5">
-        <label htmlFor="showRapidsCheckbox">🌊</label>
-        <ItemActions>
-          <Input
-            id="showRapidsCheckbox"
-            type="checkbox"
-            onChange={toggleShowRapids}
-            defaultChecked={showRapids}
-          />
-        </ItemActions>
-        <ItemContent className="flex-row">
-          <ItemTitle></ItemTitle>
+    <ItemGroup className="feature-list w-full max-w-2xl gap-0 self-center">
+      <Item variant="outline" className="4xs:flex-row my-4 flex-col py-0.5">
+        <ItemContent>
           <ItemDescription>
             <label htmlFor="showRapidsCheckbox">Afficher les rapides</label>
           </ItemDescription>
         </ItemContent>
+        <ItemActions>
+          <label htmlFor="showRapidsCheckbox">🌊</label>
+          <Switch
+            id="showRapidsSwitch"
+            onCheckedChange={toggleShowRapids}
+            defaultChecked={showRapids}
+            checked={showRapids}
+          />
+        </ItemActions>
       </Item>
-      <ItemSeparator className="bg-accent-foreground" />
-      <Day dayCounter={dayCounter++} />
-      {features.map(({ id, km, label, text }) => {
+      {features.map(({ id, km, label, text }, idx) => {
+        const isLastFeature = idx === features.length - 1;
+
         if (label === "") {
           return null;
         }
-        const kmsTravelled = checked[km]
-          ? distanceFromLastChecked(parseFloat(km), sortedChecked)
-          : null;
+        const kmsTravelled =
+          checked[km] || isLastFeature
+            ? distanceFromLastChecked(parseFloat(km), sortedChecked)
+            : null;
         const kmsTravelledLevelClassName =
           kmsTravelled !== null ? getDistanceLevelClassName(kmsTravelled) : "";
-        const daySummary = checked[km]
-          ? countFeaturesEncountered(parseFloat(km), sortedChecked, features)
-          : null;
+        const daySummary =
+          checked[km] || isLastFeature
+            ? countFeaturesEncountered(parseFloat(km), sortedChecked, features)
+            : null;
         const isCampable =
           label.indexOf("🏕") !== -1 || label.indexOf("🚙") !== -1;
 
@@ -106,35 +107,39 @@ export default function River({ features = [] }: RiverProps) {
               variant="outline"
               title={text}
               className={cn(
-                "py-0.5 rounded-none hover:bg-muted bg-accent/50",
-                !showRapids && !isCampable ? "hidden" : "",
+                "hover:bg-muted bg-accent/50 2xs:flex-row flex-col rounded-none transition-[opacity,max-height] duration-600",
+                !showRapids && !isCampable
+                  ? "max-h-0 border-0 py-0 opacity-0"
+                  : "2xs:py-0.5 max-h-96 border py-2 opacity-100",
               )}
             >
-              <ItemMedia
-                variant="icon"
-                className="text-xs text-muted-foreground w-16 inline-block font-mono"
+              <ItemContent
+                className={cn(
+                  "transition-max-height 3xs:flex-row flex w-full flex-col items-center gap-2",
+                  !showRapids && !isCampable ? "max-h-0" : "max-h-96",
+                )}
               >
-                km {parseFloat(km).toFixed(1)}
-              </ItemMedia>
-              <ItemContent className="flex flex-row items-center gap-2">
-                <ItemTitle className="w-14">
+                <span className="text-muted-foreground inline-block font-mono text-xs">
+                  km {parseFloat(km).toFixed(1)}
+                </span>
+                <ItemTitle>
                   {label[0] === "R" ||
                   label[0] === "C" ||
                   label[0] === "L" ||
                   label[0] === "S" ||
                   label[0] === "E"
-                    ? "🌊"
+                    ? "🌊 "
                     : null}
-                  {" "}
                   {label}
+                  {" "}
                 </ItemTitle>
-                <ItemDescription className="text-foreground">
+                <ItemDescription className="text-foreground text-center">
                   {text}
                 </ItemDescription>
               </ItemContent>
               {isCampable ? (
                 <ItemActions>
-                  <label className="w-16 text-right">
+                  <label className="2xs:justify-end">
                     <Input
                       type="checkbox"
                       checked={checked[km] || false}
@@ -146,35 +151,37 @@ export default function River({ features = [] }: RiverProps) {
                 </ItemActions>
               ) : null}
             </Item>
-            {isCampable && (kmsTravelled || daySummary) ? (
+            {(isLastFeature || isCampable) && (kmsTravelled || daySummary) ? (
               <Item className="">
                 <ItemContent className="items-center">
                   {kmsTravelled !== null && (
-                    <ItemTitle className="text-center">
-                      totalisant{" "}
+                    <ItemTitle className="flex flex-col 2xl:flex-row">
+                      <span>totalisant</span>
                       <span
                         className={cn("text-lg", kmsTravelledLevelClassName)}
                       >
                         {kmsTravelled} km
-                      </span>{" "}
-                      avec{" "}
+                      </span>
+                      {daySummary && Object.keys(daySummary).length > 0 && (
+                        <span>avec</span>
+                      )}
                     </ItemTitle>
                   )}
-                  <ItemGroup className="flex-row flex-wrap justify-center">
-                    {daySummary &&
-                      Object.entries(daySummary)
+                  {daySummary && (
+                    <ItemGroup className="flex-row flex-wrap justify-center">
+                      {Object.entries(daySummary)
                         .sort(([a], [b]) => compareFeatureLevel(a, b))
                         .map(([label, count]) => (
                           <Item
                             key={label}
-                            className="flex flex-row items-center gap-2 w-fit"
+                            className="flex w-fit flex-row items-center gap-2"
                           >
                             <ItemTitle>
                               <span className="font-bold">{count}</span>
                               {" "}⨉{" "}
                               <span
                                 className={cn(
-                                  "text-lg border border-accent inline-block p-2 rounded",
+                                  "3xs:text-lg border-accent inline-block rounded border p-2 text-sm",
                                   getFeatureLevelClassName(label),
                                 )}
                               >
@@ -183,15 +190,16 @@ export default function River({ features = [] }: RiverProps) {
                             </ItemTitle>
                           </Item>
                         ))}
-                  </ItemGroup>
+                    </ItemGroup>
+                  )}
                 </ItemContent>
               </Item>
             ) : null}
-            {isCampable && (kmsTravelled || daySummary) ? (
-              <ItemSeparator className="bg-accent-foreground" />
-            ) : null}
-            {isCampable && (kmsTravelled || daySummary) ? (
-              <Day dayCounter={dayCounter++} />
+            {!isLastFeature && isCampable && (kmsTravelled || daySummary) ? (
+              <>
+                <ItemSeparator className="bg-accent-foreground" />
+                <Day dayCounter={dayCounter++} />
+              </>
             ) : null}
           </Fragment>
         );
@@ -262,6 +270,8 @@ function countFeaturesEncountered(
 
 function Day({ dayCounter }: { dayCounter: number }) {
   return (
-    <Item className="font-bold justify-center text-lg">Jour {dayCounter}</Item>
+    <Item variant="outline" className="justify-center text-lg font-bold">
+      Jour {dayCounter}
+    </Item>
   );
 }

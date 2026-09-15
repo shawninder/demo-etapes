@@ -1,21 +1,21 @@
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
 import rivers from "@/data/rivers/";
 import { Item, ItemGroup } from "@/components/ui/item";
 import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
 
 export default function Home() {
   return (
     <>
-      <h1 className="text-3xl font-semibold leading-10 tracking-tight text-foreground capitalize text-center w-full my-16">
-        Rivière __________ <ChevronDown className="inline" />
+      <h1 className="text-foreground my-16 w-full text-center text-2xl leading-10 font-semibold tracking-tight">
+        rivières
       </h1>
       <ItemGroup>
         {Object.keys(rivers).map((slug) => (
           <Link key={slug} href={`/${slug}`} className="w-full">
             <Item
               variant="muted"
-              className="text-xl capitalize hover:bg-level-neutral-bg hover:border-level-neutral-border hover:text-level-neutral-text"
+              className="hover:bg-level-neutral-bg hover:border-level-neutral-border hover:text-level-neutral-text capitalize"
             >
               {slug}
             </Item>
@@ -27,8 +27,9 @@ export default function Home() {
         >
           <Button
             size="lg"
-            className="w-full cursor-pointer text-xl py-8 my-16"
+            className="my-16 h-fit w-full cursor-pointer py-8 whitespace-normal"
           >
+            <PlusCircle className="4xs:inline hidden" />
             Demander une autre rivière
           </Button>
         </Link>
