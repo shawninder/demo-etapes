@@ -19,6 +19,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { CornerRightDown } from "lucide-react";
 
 export type RiverProps = {
   features: (RiverFeature & { id: string })[];
@@ -75,6 +76,16 @@ export default function River({ features = [] }: RiverProps) {
             defaultChecked={showRapids}
             checked={showRapids}
           />
+        </ItemActions>
+      </Item>
+      <Item className="">
+        <ItemContent>
+          <ItemDescription className="text-level-neutral-text text-right text-xl">
+            Coche tes dodos
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <CornerRightDown className="text-level-neutral-text mr-1" />
         </ItemActions>
       </Item>
       {features.map(({ id, km, label, text }, idx) => {
@@ -192,7 +203,7 @@ export default function River({ features = [] }: RiverProps) {
             ) : null}
             {!isLastFeature && isCampable && (kmsTravelled || daySummary) ? (
               <>
-                <ItemSeparator className="bg-accent-foreground" />
+                <ItemSeparator className="bg-level-neutral-border" />
                 <Day dayCounter={dayCounter++} />
               </>
             ) : null}
@@ -265,8 +276,6 @@ function countFeaturesEncountered(
 
 function Day({ dayCounter }: { dayCounter: number }) {
   return (
-    <Item variant="outline" className="justify-center text-lg font-bold">
-      Jour {dayCounter}
-    </Item>
+    <Item className="justify-center text-lg font-bold">Jour {dayCounter}</Item>
   );
 }
