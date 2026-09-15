@@ -163,6 +163,12 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --breakpoint-xs: 32rem;
+  --breakpoint-2xs: 24rem;
+  --breakpoint-3xs: 16rem;
+  --breakpoint-4xs: 12rem;
+  --breakpoint-5xs: 8rem;
 }
 
 @media (prefers-color-scheme: dark) {
