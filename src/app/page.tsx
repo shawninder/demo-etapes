@@ -122,11 +122,13 @@ km 407.4: R2`}
         ).
       </p>
       <p className="my-4 text-lg">C'est long!</p>
-      <p className="my-4 text-lg">
+      <p className="my-4 text-center text-lg">
         <span className="bg-level-active-bg inline-block px-2">
           Appel à l'aide
-        </span>{" "}
+        </span>
+        <br />
         Des idées pour accélérer la production de ces fichiers? Je suis preneur!
+        <br />↓
       </p>
     </>
   );

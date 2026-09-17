@@ -48,7 +48,6 @@ export default function RootLayout({
               className="hover:text-level-helpful-text 2xs:py-8 flex h-fit w-full cursor-pointer flex-col py-2 whitespace-normal"
             >
               <MessageCircleMore className="size-5" />
-              Me joindre
             </Button>
           </Link>
         </footer>
