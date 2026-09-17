@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <h1 className="text-foreground mt-16 mb-4 w-full text-center text-2xl leading-10 font-semibold tracking-tight">
-        <span className="bg-level-active-bg inline-block px-2">
+        <span className="bg-level-active-bg text-level-active-text inline-block px-2">
           Preuve de Concept:
         </span>{" "}
         Étapes
@@ -123,7 +123,7 @@ km 407.4: R2`}
       </p>
       <p className="my-4 text-lg">C'est long!</p>
       <p className="my-4 text-center text-lg">
-        <span className="bg-level-active-bg inline-block px-2">
+        <span className="bg-level-active-bg text-level-active-text inline-block px-2">
           Appel à l'aide
         </span>
         <br />
