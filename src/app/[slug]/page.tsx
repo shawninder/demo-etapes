@@ -28,9 +28,7 @@ export default async function RiverPage({
             <ItemContent className="flex-row items-center justify-between">
               <MoveLeft />
               <div>
-                <ItemTitle className="2xs:text-3xl">
-                  {slug} <ChevronDown className="inline size-3 sm:size-6" />
-                </ItemTitle>
+                <ItemTitle className="2xs:text-3xl">{slug}</ItemTitle>
               </div>
             </ItemContent>
           </Item>

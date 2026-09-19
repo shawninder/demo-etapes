@@ -47,22 +47,22 @@ export default [
   {
     km: "407.7",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "407.4",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "405.5",
     label: "R1",
-    text: "R1 run right of the island",
+    text: "run right of the island",
   },
   {
     km: "405.2",
     label: "R3",
-    text: "R3 run right of the island",
+    text: "run right of the island",
   },
   {
     km: "405",
@@ -72,17 +72,17 @@ export default [
   {
     km: "404.2",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "404",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "403.7",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "401.5",
@@ -112,12 +112,12 @@ export default [
   {
     km: "395.8",
     label: "R1",
-    text: "R1 use right channel; two channels on the left are dry",
+    text: "use right channel; two channels on the left are dry",
   },
   {
     km: "395.6",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "394.5",
@@ -127,17 +127,17 @@ export default [
   {
     km: "393.2",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "391",
     label: "🏕GA",
-    text: "GA campsite on the right bleberries",
+    text: "campsite on the right bleberries",
   },
   {
     km: "391",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "390.7",
@@ -152,12 +152,12 @@ export default [
   {
     km: "389.7",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "389",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "387.7",
@@ -172,7 +172,7 @@ export default [
   {
     km: "385.2",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "384.8",
@@ -187,7 +187,7 @@ export default [
   {
     km: "383.3",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "383",
@@ -202,12 +202,12 @@ export default [
   {
     km: "380.3",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "379.6",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "378.7",
@@ -217,22 +217,22 @@ export default [
   {
     km: "370",
     label: "R1-2",
-    text: "R1-2",
+    text: "",
   },
   {
     km: "369.7",
     label: "R1-2",
-    text: "R1-2",
+    text: "",
   },
   {
     km: "368.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "368",
     label: "R3-4",
-    text: "R3-4",
+    text: "",
   },
   {
     km: "367.3",
@@ -247,12 +247,12 @@ export default [
   {
     km: "366.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "365.8",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "365.2",
@@ -262,7 +262,7 @@ export default [
   {
     km: "364.3",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "363.8",
@@ -282,7 +282,7 @@ export default [
   {
     km: "360",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "360",
@@ -302,17 +302,17 @@ export default [
   {
     km: "356.5",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "356",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "355.3",
     label: "R1-2",
-    text: "R1-2",
+    text: "",
   },
   {
     km: "355.3",
@@ -332,22 +332,22 @@ export default [
   {
     km: "350.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "350",
     label: "R5",
-    text: "R5 run right and carry over",
+    text: "run right and carry over",
   },
   {
     km: "349.5",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "347",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "344.6",
@@ -377,7 +377,7 @@ export default [
   {
     km: "343.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "343",
@@ -392,21 +392,11 @@ export default [
   {
     km: "339",
     label: "R2-4",
-    text: "R2-4 left channel R2; middle channel R3 (hard to approach); right channel R4",
+    text: "left channel R2; middle channel R3 (hard to approach); right channel R4",
   },
   {
     km: "339",
-    label: "R2",
-    text: "R2-4 left channel R2; middle channel R3 (hard to approach); right channel R4",
-  },
-  {
-    km: "339",
-    label: "R3",
-    text: "R2-4 left channel R2; middle channel R3 (hard to approach); right channel R4",
-  },
-  {
-    km: "339",
-    label: "R4",
+    label: "R2-4",
     text: "R2-4 left channel R2; middle channel R3 (hard to approach); right channel R4",
   },
   {
@@ -492,12 +482,12 @@ export default [
   {
     km: "305",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "304.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "304",
@@ -507,12 +497,12 @@ export default [
   {
     km: "299.6",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "298",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "297",
@@ -532,7 +522,7 @@ export default [
   {
     km: "292.3",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "289.5",
@@ -552,22 +542,22 @@ export default [
   {
     km: "281.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "281",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "280",
     label: "R3-4",
-    text: "R3-4 line or portage on the right portage 120 m",
+    text: "line or portage on the right portage 120 m",
   },
   {
     km: "280",
     label: "P",
-    text: "R3-4 line or portage on the right portage 120 m",
+    text: "line or portage on the right portage 120 m",
   },
   {
     km: "279",
@@ -647,17 +637,17 @@ export default [
   {
     km: "213.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "213.2",
     label: "R4",
-    text: "R4 line on the right side of the main channel",
+    text: "line on the right side of the main channel",
   },
   {
     km: "213",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "212",
@@ -677,17 +667,12 @@ export default [
   {
     km: "211.7",
     label: "R1",
-    text: "R1 R1 is on the right side of the island; there is ledge 3 on the left side of the island",
-  },
-  {
-    km: "211.7",
-    label: "R1",
-    text: "R1 R1 is on the right side of the island; there is ledge 3 on the left side of the island",
+    text: "R1 is on the right side of the island; there is ledge 3 on the left side of the island",
   },
   {
     km: "211.7",
     label: "S3",
-    text: "R1 R1 is on the right side of the island; there is ledge 3 on the left side of the island",
+    text: "ledge 3 on the left side of the island; there is R1 is on the right side of the island",
   },
   {
     km: "209.5",
@@ -747,12 +732,12 @@ export default [
   {
     km: "188.5",
     label: "R4",
-    text: "R4 line on the left",
+    text: "line on the left",
   },
   {
     km: "188",
     label: "R5",
-    text: "R5 line on the left",
+    text: "line on the left",
   },
   {
     km: "187.8",
@@ -762,7 +747,7 @@ export default [
   {
     km: "187.3",
     label: "R2-4",
-    text: "R2-4",
+    text: "",
   },
   {
     km: "186.5",
@@ -787,12 +772,12 @@ export default [
   {
     km: "180.8",
     label: "R3-4",
-    text: "R3-4 line & run on the left",
+    text: "line & run on the left",
   },
   {
     km: "180.4",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "180",
@@ -802,7 +787,7 @@ export default [
   {
     km: "178.5",
     label: "R1",
-    text: "R1?",
+    text: "",
   },
   {
     km: "178.5",
@@ -832,7 +817,7 @@ export default [
   {
     km: "165.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "164",
@@ -867,47 +852,47 @@ export default [
   {
     km: "150",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "149.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "148.8",
     label: "R3-4",
-    text: "R3-4",
+    text: "",
   },
   {
     km: "148.1",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "144.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "144.2",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "142.3",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "141.3",
     label: "R4",
-    text: "R4 portage 500 m on the right side",
+    text: "portage 500 m on the right side",
   },
   {
     km: "141.3",
     label: "P",
-    text: "R4 portage 500 m on the right side",
+    text: "portage 500 m on the right side",
   },
   {
     km: "140.5",
@@ -922,7 +907,7 @@ export default [
   {
     km: "140.2",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "136.8",
@@ -937,12 +922,12 @@ export default [
   {
     km: "124.8",
     label: "R2-3",
-    text: "R2-3 Kapitachuch rapids",
+    text: "Kapitachuch rapids",
   },
   {
     km: "123",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "121.5",
@@ -962,17 +947,17 @@ export default [
   {
     km: "115",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "114.4",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "113.9",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "113.6",
@@ -987,7 +972,7 @@ export default [
   {
     km: "109.8",
     label: "R4",
-    text: "R4 Kakusaschechun rapids",
+    text: "Kakusaschechun rapids",
   },
   {
     km: "108.5",
@@ -997,7 +982,7 @@ export default [
   {
     km: "108",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "107",
@@ -1027,7 +1012,7 @@ export default [
   {
     km: "103.6",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "103.5",
@@ -1037,7 +1022,7 @@ export default [
   {
     km: "103.2",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "103",
@@ -1052,12 +1037,12 @@ export default [
   {
     km: "102.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "101.8",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "100.7",
@@ -1067,7 +1052,7 @@ export default [
   {
     km: "100.2",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "100",
@@ -1077,12 +1062,12 @@ export default [
   {
     km: "99",
     label: "R4",
-    text: "R4 Kawisipapachipiskach rapid",
+    text: "Kawisipapachipiskach rapid",
   },
   {
     km: "98.7",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "95",
@@ -1102,7 +1087,7 @@ export default [
   {
     km: "93.2",
     label: "R3-4",
-    text: "R3-4",
+    text: "",
   },
   {
     km: "92.3",
@@ -1117,12 +1102,12 @@ export default [
   {
     km: "91.7",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "91",
     label: "R1",
-    text: "R1 Tupatukashish rapid",
+    text: "Tupatukashish rapid",
   },
   {
     km: "90",
@@ -1177,7 +1162,7 @@ export default [
   {
     km: "73.4",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "72.2",
@@ -1192,7 +1177,7 @@ export default [
   {
     km: "71.4",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "71.2",
@@ -1202,7 +1187,7 @@ export default [
   {
     km: "70.4",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "69.5",
@@ -1217,7 +1202,7 @@ export default [
   {
     km: "65.4",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "65",
@@ -1237,7 +1222,7 @@ export default [
   {
     km: "63.9",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "62.8",
@@ -1247,7 +1232,7 @@ export default [
   {
     km: "62",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "61.5",
@@ -1257,12 +1242,12 @@ export default [
   {
     km: "61",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "59.2",
     label: "R2-3",
-    text: "R2-3",
+    text: "",
   },
   {
     km: "57.4",
@@ -1272,7 +1257,7 @@ export default [
   {
     km: "57.4",
     label: "R3",
-    text: "R3",
+    text: "",
   },
   {
     km: "56.5",
@@ -1287,7 +1272,7 @@ export default [
   {
     km: "55",
     label: "R1-2",
-    text: "R1-2",
+    text: "",
   },
   {
     km: "52.5",
@@ -1297,7 +1282,7 @@ export default [
   {
     km: "51.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "49",
@@ -1312,7 +1297,7 @@ export default [
   {
     km: "48.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "48.3",
@@ -1322,17 +1307,17 @@ export default [
   {
     km: "47.5",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "46.6",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "45.2",
     label: "R4",
-    text: "R4",
+    text: "",
   },
   {
     km: "44.8",
@@ -1347,12 +1332,12 @@ export default [
   {
     km: "42.2",
     label: "R1",
-    text: "R1",
+    text: "",
   },
   {
     km: "41.5",
     label: "R2",
-    text: "R2",
+    text: "",
   },
   {
     km: "41",
@@ -1372,12 +1357,12 @@ export default [
   {
     km: "39",
     label: "R1-2",
-    text: "R1-2",
+    text: "",
   },
   {
     km: "37.7",
     label: "R1-2",
-    text: "R1-2",
+    text: "",
   },
   {
     km: "33.8",
@@ -1407,7 +1392,7 @@ export default [
   {
     km: "22.7",
     label: "R1-3",
-    text: "R1-3",
+    text: "",
   },
   {
     km: "21.2",

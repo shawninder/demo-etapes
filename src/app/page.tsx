@@ -80,54 +80,10 @@ export default function Home() {
             Demander une autre rivière
           </Button>
         </Link>
-        <ItemSeparator />
       </ItemGroup>
-      <p className="my-4 text-lg">
-        J'ai plusieurs idées pour amélioré cet outil:
-      </p>
-      <ul className="list-disc pl-6">
-        <li>
-          Intégration avec la carte-guide pour analyser la rivière en
-          choisissant ses dodos
-        </li>
-        <li>
-          Intégration avec Google Maps (ou autre) pour intégrer les journées
-          navettes à la réflexion.
-        </li>
-        <li>Dodos avec plan B, plan C…, pour rester flexible</li>
-        <li>etc.</li>
-      </ul>
-      <p className="my-4 text-lg">
-        Pour l'instant, par contre, le nerf de la guerre c'est d'ajouter des
-        rivières!
-      </p>
-      <p className="my-4 text-lg">
-        Il s'agit de regarder la carte-guide et produire un fichier avec tous
-        les <i>features</i>, quelque chose comme:
-      </p>
-      <pre className="pl-7">
-        {`km 410.0: GC
-km 407.7: R1
-km 407.4: R2`}
-      </pre>
-      <p className="my-4 text-lg">
-        Pour la première rivière (Broadback), j'ai fait ça à la mitaine (
-        <Link
-          target="_blank"
-          href="https://github.com/shawninder/demo-etapes/blob/main/src/data/rivers/broadback.ts"
-          className="text-level-fun-text hover:text-level-active-text"
-        >
-          voir le fichier en question
-        </Link>
-        ).
-      </p>
-      <p className="my-4 text-lg">C'est long!</p>
-      <p className="my-4 text-center text-lg">
-        <span className="bg-level-active-bg text-level-active-text inline-block px-2">
-          Appel à l'aide
-        </span>
+      <p className="mt-8 text-center text-lg">
         <br />
-        Des idées pour accélérer la production de ces fichiers? Je suis preneur!
+        Questions, commentaires, idées…
         <br />↓
       </p>
     </>
