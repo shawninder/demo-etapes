@@ -53,6 +53,7 @@ export default function RootLayout({
           <div className="my-16 text-xs">
             Merci à{" "}
             <Link
+              target="_blank"
               href="https://cartespleinair.org"
               className="text-level-neutral-text"
             >
