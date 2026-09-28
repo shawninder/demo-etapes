@@ -50,6 +50,17 @@ export default function RootLayout({
               <MessageCircleMore className="size-5" />
             </Button>
           </Link>
+          <div className="my-16 text-xs">
+            Merci à{" "}
+            <Link
+              href="https://cartespleinair.org"
+              className="text-level-neutral-text"
+            >
+              cartespleinair.org
+            </Link>{" "}
+            et tous les bénévoles de la communauté de canotage qui ont récolté
+            les données et produits les cartes-guide.
+          </div>
         </footer>
       </body>
     </html>
