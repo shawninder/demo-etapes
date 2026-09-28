@@ -145,7 +145,7 @@ export default function River({ features = [] }: RiverProps) {
               </ItemContent>
               {isCampable ? (
                 <ItemActions>
-                  <label className="2xs:justify-end">
+                  <label className="2xs:justify-end flex-rox flex items-center">
                     <Input
                       type="checkbox"
                       checked={checked[km] || false}
