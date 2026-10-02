@@ -59,8 +59,7 @@ export default function RootLayout({
             >
               cartespleinair.org
             </Link>{" "}
-            et tous les bénévoles de la communauté de canotage qui ont récolté
-            les données et produits les cartes-guide.
+            et tous les bénévoles qui ont produit les cartes-guides.
           </div>
         </footer>
       </body>
