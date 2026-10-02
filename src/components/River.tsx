@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-import type { RiverFeature } from "@/data/rivers";
+import type { RiverFeature } from "@/data/rivers/RiverFeature";
 import {
   Item,
   ItemGroup,

@@ -1,7 +1,10 @@
-export default [
+import type { RiverFeature } from "@/data/rivers/RiverFeature";
+
+const riverData: RiverFeature[] = [
   {
     km: "424.3",
     label: "🚙",
+    address: "50.75056, -75.12572",
     text: "bridge (Route du Nord)",
   },
   {
@@ -902,6 +905,7 @@ export default [
   {
     km: "140.4",
     label: "🚙",
+    address: "51.185706,-77.4663324",
     text: "James Bay Road bridge (division point of Upper & Lower Broadback) campsite on the right",
   },
   {
@@ -1412,6 +1416,9 @@ export default [
   {
     km: "0",
     label: "🚙",
+    address: "14 Cowboy Trail, Waskaganish, QC J0M 1R0",
     text: "Waskaganish dock 656387 5706765 17U",
   },
 ];
+
+export default riverData;

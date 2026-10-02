@@ -1,10 +1,5 @@
 import broadback from "./broadback";
-
-export type RiverFeature = {
-  km: string;
-  label: string;
-  text: string;
-};
+import type { RiverFeature } from "./RiverFeature";
 
 const rivers: { [key: string]: RiverFeature[] } = {
   broadback,
