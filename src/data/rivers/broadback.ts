@@ -4,7 +4,7 @@ const riverData: RiverFeature[] = [
   {
     km: "424.3",
     label: "🚙",
-    address: "50.75056, -75.12572",
+    address: "50.75056,-75.12572",
     text: "bridge (Route du Nord)",
   },
   {
@@ -1416,7 +1416,7 @@ const riverData: RiverFeature[] = [
   {
     km: "0",
     label: "🚙",
-    address: "14 Cowboy Trail, Waskaganish, QC J0M 1R0",
+    address: "51.489391,-78.7503737",
     text: "Waskaganish dock 656387 5706765 17U",
   },
 ];

@@ -20,6 +20,9 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { CornerRightDown } from "lucide-react";
+import Directions from "@/components/Directions";
+import HomeAddressDialog from "@/components/HomeAddressDialog";
+import { formatTrip, getTrips, type Trip } from "@/lib/directions";
 
 export type RiverProps = {
   features: (RiverFeature & { id: string })[];
@@ -31,6 +34,9 @@ export default function River({ features = [] }: RiverProps) {
   const [hydrated, setHydrated] = useState(false);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [showRapids, setShowRapids] = useState<boolean>(defaultShowRapids);
+  const [homeAddress, setHomeAddress] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [trips, setTrips] = useState<Record<string, Trip>>({});
 
   function toggleShowRapids() {
     setShowRapids((prev) => !prev);
@@ -41,12 +47,36 @@ export default function River({ features = [] }: RiverProps) {
     if (stored) {
       setChecked(JSON.parse(stored));
     }
+    setHomeAddress(localStorage.getItem("homeAddress") ?? "");
     setHydrated(true);
   }, []);
   useEffect(() => {
     if (!hydrated) return;
     localStorage.setItem("checked", JSON.stringify(checked));
   }, [checked, hydrated]);
+
+  const destinations = [
+    ...new Set(features.flatMap(({ address }) => (address ? [address] : []))),
+  ];
+
+  useEffect(() => {
+    if (!hydrated || !homeAddress) return;
+    let cancelled = false;
+    getTrips(homeAddress, destinations).then(
+      (result) => !cancelled && setTrips(result),
+      console.error,
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrated]);
+
+  async function saveHomeAddress(address: string) {
+    localStorage.setItem("homeAddress", address);
+    setHomeAddress(address);
+    setTrips(await getTrips(address, destinations));
+    setDialogOpen(false);
+  }
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const km = event.target.dataset.km;
@@ -67,6 +97,12 @@ export default function River({ features = [] }: RiverProps) {
 
   return (
     <ItemGroup className="feature-list w-full max-w-2xl gap-0 self-center">
+      <HomeAddressDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        homeAddress={homeAddress}
+        onSave={saveHomeAddress}
+      />
       <Item className="4xs:flex-row 4xs:justify-end my-4 flex-col py-0.5">
         <ItemTitle>🌊</ItemTitle>
         <ItemActions>
@@ -88,7 +124,7 @@ export default function River({ features = [] }: RiverProps) {
           <CornerRightDown className="text-level-neutral-text mr-1" />
         </ItemActions>
       </Item>
-      {features.map(({ id, km, label, text }, idx) => {
+      {features.map(({ id, km, label, text, address }, idx) => {
         const isLastFeature = idx === features.length - 1;
 
         if (label === "") {
@@ -143,8 +179,16 @@ export default function River({ features = [] }: RiverProps) {
                   {text}
                 </ItemDescription>
               </ItemContent>
-              {isCampable ? (
-                <ItemActions>
+              <ItemActions className="2xs:ml-auto 2xs:flex-row flex-col">
+                {address && homeAddress && trips[address] ? (
+                  <span className="text-muted-foreground text-right text-xs">
+                    {formatTrip(trips[address])} de {homeAddress}
+                  </span>
+                ) : null}
+                {address ? (
+                  <Directions onClick={() => setDialogOpen(true)} />
+                ) : null}
+                {isCampable ? (
                   <label className="2xs:justify-end flex-rox flex items-center">
                     <Input
                       type="checkbox"
@@ -154,8 +198,8 @@ export default function River({ features = [] }: RiverProps) {
                       className="size-6"
                     />
                   </label>
-                </ItemActions>
-              ) : null}
+                ) : null}
+              </ItemActions>
             </Item>
             {(isLastFeature || isCampable) && (kmsTravelled || daySummary) ? (
               <Item className="">
