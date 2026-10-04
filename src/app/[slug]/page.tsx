@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronDown, MoveLeft } from "lucide-react";
+import { MoveLeft } from "lucide-react";
 import River from "@/components/River";
-import riverFeatures from "../../data/rivers";
+import rivers from "@/data/rivers";
 import { Item, ItemContent, ItemTitle } from "@/components/ui/item";
 
 type RiverPageProps = {
@@ -15,32 +15,52 @@ export default async function RiverPage({
   params: Promise<RiverPageProps>;
 }) {
   const { slug } = await params;
-  const features = riverFeatures[slug].map(({ ...keys }) => ({
-    ...keys,
-    id: crypto.randomUUID(),
-  }));
+  const river = rivers[slug];
 
   return (
     <>
       <h1 className="text-foreground my-2 w-full text-center leading-10 font-semibold tracking-tight capitalize 2xl:my-16">
-        <Link href="/" className="hover:text-level-neutral-text">
-          <Item>
-            <ItemContent className="flex-row items-center justify-between">
+        <Item>
+          <ItemContent className="flex-row items-center justify-between">
+            <Link href="/" className="hover:text-level-neutral-text">
               <MoveLeft />
-              <div>
-                <ItemTitle className="2xs:text-3xl">{slug}</ItemTitle>
-              </div>
-            </ItemContent>
-          </Item>
-        </Link>
+            </Link>
+            <div>
+              <ItemTitle className="2xs:text-3xl">{river.name}</ItemTitle>
+            </div>
+          </ItemContent>
+        </Item>
       </h1>
-      <River features={features} />
+      {river.gaugeUrl || river.mapUrls.length > 0 ? (
+        <nav className="mb-4 flex flex-wrap justify-center gap-4 text-sm">
+          {river.gaugeUrl ? (
+            <Link
+              target="_blank"
+              href={river.gaugeUrl}
+              className="text-level-neutral-text hover:text-level-helpful-text"
+            >
+              Niveau d&apos;eau
+            </Link>
+          ) : null}
+          {river.mapUrls.map((url, i) => (
+            <Link
+              key={url}
+              target="_blank"
+              href={url}
+              className="text-level-neutral-text hover:text-level-helpful-text"
+            >
+              Carte-guide{river.mapUrls.length > 1 ? ` ${i + 1}` : ""}
+            </Link>
+          ))}
+        </nav>
+      ) : null}
+      <River river={river} />
     </>
   );
 }
 
 export function generateStaticParams() {
-  return [{ slug: "broadback" }];
+  return Object.keys(rivers).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -50,6 +70,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   return {
-    title: `Rivière ${slug[0].toUpperCase()}${slug.slice(1)}`,
+    title: `Rivière ${rivers[slug].name}`,
   };
 }

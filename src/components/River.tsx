@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
-import type { RiverFeature } from "@/data/rivers/RiverFeature";
+import type { Fork, Itinerary, Km, River } from "@/data/rivers/types";
 import {
   Item,
   ItemGroup,
@@ -12,51 +12,110 @@ import {
   ItemSeparator,
 } from "@/components/ui/item";
 import {
-  compareFeatureLevel,
   getDistanceLevelClassName,
   getFeatureLevelClassName,
 } from "@/lib/featureLevel";
+import {
+  formatLength,
+  getFeatureLabel,
+  getFeatureName,
+  isWhitewater,
+} from "@/lib/featureLabel";
+import {
+  buildRows,
+  getAccesses,
+  isFork,
+  isStop,
+  planDays,
+  routePrefix,
+  rowKey,
+  selectedPath,
+  selectedRoute,
+  type Day,
+  type Feature,
+  type FeatureKind,
+  type Plan,
+  type Row,
+  type Selection,
+  type StopPlan,
+} from "@/lib/itinerary";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { CornerRightDown } from "lucide-react";
 import Directions from "@/components/Directions";
 import HomeAddressDialog from "@/components/HomeAddressDialog";
-import { formatTrip, getTrips, type Trip } from "@/lib/directions";
+import TripSummary from "@/components/TripSummary";
+import { getTrips, type Trip } from "@/lib/directions";
 
-export type RiverProps = {
-  features: (RiverFeature & { id: string })[];
+type FilterKind = Exclude<FeatureKind, "fork">;
+type Filters = Record<FilterKind, boolean>;
+
+const filterKinds: { kind: FilterKind; icon: string; title: string }[] = [
+  { kind: "access", icon: "🚙", title: "Accès routiers" },
+  { kind: "campsite", icon: "🏕", title: "Campings" },
+  { kind: "section", icon: "🌊", title: "Rapides, seuils et lacs" },
+  { kind: "portage", icon: "P", title: "Portages" },
+  { kind: "pointOfInterest", icon: "📍", title: "Points d'intérêt" },
+];
+
+const defaultFilters: Filters = {
+  access: true,
+  campsite: true,
+  section: true,
+  portage: true,
+  pointOfInterest: true,
 };
 
-const defaultShowRapids = true;
+type View = {
+  checked: Record<string, boolean>;
+  onCheck: (key: string, checked: boolean) => void;
+  selection: Selection;
+  onSelect: (forkKey: string, route: number) => void;
+  filters: Filters;
+  plan: Plan;
+  homeAddress: string;
+  trips: Record<string, Trip>;
+  openDirections: () => void;
+};
 
-export default function River({ features = [] }: RiverProps) {
+function destination({ lat, lon }: { lat: number; lon: number }) {
+  return `${lat},${lon}`;
+}
+
+export default function RiverView({ river }: { river: River }) {
   const [hydrated, setHydrated] = useState(false);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const [showRapids, setShowRapids] = useState<boolean>(defaultShowRapids);
+  const [selection, setSelection] = useState<Selection>({});
+  const [filters, setFilters] = useState<Filters>(defaultFilters);
   const [homeAddress, setHomeAddress] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [trips, setTrips] = useState<Record<string, Trip>>({});
 
-  function toggleShowRapids() {
-    setShowRapids((prev) => !prev);
-  }
+  const checkedStorageKey = `checked:${river.slug}`;
+  const selectionStorageKey = `routes:${river.slug}`;
 
   useEffect(() => {
-    const stored = localStorage.getItem("checked");
-    if (stored) {
-      setChecked(JSON.parse(stored));
-    }
+    const storedChecked = localStorage.getItem(checkedStorageKey);
+    if (storedChecked) setChecked(JSON.parse(storedChecked));
+    const storedSelection = localStorage.getItem(selectionStorageKey);
+    if (storedSelection) setSelection(JSON.parse(storedSelection));
     setHomeAddress(localStorage.getItem("homeAddress") ?? "");
     setHydrated(true);
   }, []);
   useEffect(() => {
     if (!hydrated) return;
-    localStorage.setItem("checked", JSON.stringify(checked));
+    localStorage.setItem(checkedStorageKey, JSON.stringify(checked));
   }, [checked, hydrated]);
+  useEffect(() => {
+    if (!hydrated) return;
+    localStorage.setItem(selectionStorageKey, JSON.stringify(selection));
+  }, [selection, hydrated]);
 
   const destinations = [
-    ...new Set(features.flatMap(({ address }) => (address ? [address] : []))),
+    ...new Set(
+      getAccesses(river).map(({ coordinates }) => destination(coordinates)),
+    ),
   ];
 
   useEffect(() => {
@@ -78,22 +137,22 @@ export default function River({ features = [] }: RiverProps) {
     setDialogOpen(false);
   }
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const km = event.target.dataset.km;
-    if (km) {
-      setChecked((prev) => ({
-        ...prev,
-        [km]: event.target.checked,
-      }));
-    }
+  function toggleFilter(kind: FilterKind) {
+    setFilters((prev) => ({ ...prev, [kind]: !prev[kind] }));
+  }
+
+  const view: View = {
+    checked,
+    onCheck: (key, value) => setChecked((prev) => ({ ...prev, [key]: value })),
+    selection,
+    onSelect: (forkKey, route) =>
+      setSelection((prev) => ({ ...prev, [forkKey]: route })),
+    filters,
+    plan: planDays(selectedPath(river, selection), checked),
+    homeAddress,
+    trips,
+    openDirections: () => setDialogOpen(true),
   };
-
-  const sortedChecked = Object.entries(checked)
-    .filter(([_, isChecked]) => isChecked)
-    .map(([km]) => parseFloat(km))
-    .sort((a, b) => b - a);
-
-  let dayCounter = 1;
 
   return (
     <ItemGroup className="feature-list w-full max-w-2xl gap-0 self-center">
@@ -103,18 +162,25 @@ export default function River({ features = [] }: RiverProps) {
         homeAddress={homeAddress}
         onSave={saveHomeAddress}
       />
-      <Item className="4xs:flex-row 4xs:justify-end my-4 flex-col py-0.5">
-        <ItemTitle>🌊</ItemTitle>
-        <ItemActions>
-          <Switch
-            id="showRapidsSwitch"
-            onCheckedChange={toggleShowRapids}
-            defaultChecked={showRapids}
-            checked={showRapids}
-          />
+      <Item className="my-4 justify-end py-0.5">
+        <ItemActions className="flex-wrap justify-end">
+          {filterKinds.map(({ kind, icon, title }) => (
+            <Button
+              key={kind}
+              variant={filters[kind] ? "secondary" : "ghost"}
+              size="icon"
+              aria-pressed={filters[kind]}
+              aria-label={title}
+              title={title}
+              onClick={() => toggleFilter(kind)}
+              className={cn("cursor-pointer", !filters[kind] && "opacity-40")}
+            >
+              {icon}
+            </Button>
+          ))}
         </ItemActions>
       </Item>
-      <Item className="">
+      <Item>
         <ItemContent>
           <ItemDescription className="text-level-neutral-text text-right text-xl">
             Coche tes dodos
@@ -124,202 +190,324 @@ export default function River({ features = [] }: RiverProps) {
           <CornerRightDown className="text-level-neutral-text mr-1" />
         </ItemActions>
       </Item>
-      {features.map(({ id, km, label, text, address }, idx) => {
-        const isLastFeature = idx === features.length - 1;
-
-        if (label === "") {
-          return null;
-        }
-        const kmsTravelled =
-          checked[km] || isLastFeature
-            ? distanceFromLastChecked(parseFloat(km), sortedChecked)
-            : null;
-        const kmsTravelledLevelClassName =
-          kmsTravelled !== null ? getDistanceLevelClassName(kmsTravelled) : "";
-        const daySummary =
-          checked[km] || isLastFeature
-            ? countFeaturesEncountered(parseFloat(km), sortedChecked, features)
-            : null;
-        const isCampable =
-          label.indexOf("🏕") !== -1 || label.indexOf("🚙") !== -1;
-
-        return (
-          <Fragment key={id}>
-            <Item
-              variant="outline"
-              title={text}
-              className={cn(
-                "hover:bg-muted bg-accent/50 2xs:flex-row flex-col rounded-none transition-[opacity,max-height] duration-600",
-                !showRapids && !isCampable
-                  ? "max-h-0 border-0 py-0 opacity-0"
-                  : "2xs:py-0.5 max-h-96 border py-2 opacity-100",
-              )}
-            >
-              <ItemContent
-                className={cn(
-                  "transition-max-height 3xs:flex-row flex w-full flex-col items-center gap-2",
-                  !showRapids && !isCampable ? "max-h-0" : "max-h-96",
-                )}
-              >
-                <span className="text-muted-foreground inline-block font-mono text-xs">
-                  km {parseFloat(km).toFixed(1)}
-                </span>
-                <ItemTitle>
-                  {label[0] === "R" ||
-                  label[0] === "C" ||
-                  label[0] === "L" ||
-                  label[0] === "S" ||
-                  label[0] === "E"
-                    ? "🌊 "
-                    : null}
-                  {label}
-                  {" "}
-                </ItemTitle>
-                <ItemDescription className="text-foreground text-center">
-                  {text}
-                </ItemDescription>
-              </ItemContent>
-              <ItemActions className="2xs:ml-auto 2xs:flex-row flex-col">
-                {address && homeAddress && trips[address] ? (
-                  <span className="text-muted-foreground text-right text-xs">
-                    {formatTrip(trips[address])} de {homeAddress}
-                  </span>
-                ) : null}
-                {address ? (
-                  <Directions onClick={() => setDialogOpen(true)} />
-                ) : null}
-                {isCampable ? (
-                  <label className="2xs:justify-end flex-rox flex items-center">
-                    <Input
-                      type="checkbox"
-                      checked={checked[km] || false}
-                      onChange={onChange}
-                      data-km={km}
-                      className="size-6"
-                    />
-                  </label>
-                ) : null}
-              </ItemActions>
-            </Item>
-            {(isLastFeature || isCampable) && (kmsTravelled || daySummary) ? (
-              <Item className="">
-                <ItemContent className="items-center">
-                  {kmsTravelled !== null && (
-                    <ItemTitle className="flex flex-col 2xl:flex-row">
-                      <span>totalisant</span>
-                      <span
-                        className={cn("text-lg", kmsTravelledLevelClassName)}
-                      >
-                        {kmsTravelled} km
-                      </span>
-                      {daySummary && Object.keys(daySummary).length > 0 && (
-                        <span>avec</span>
-                      )}
-                    </ItemTitle>
-                  )}
-                  {daySummary && (
-                    <ItemGroup className="flex-row flex-wrap justify-center">
-                      {Object.entries(daySummary)
-                        .sort(([a], [b]) => compareFeatureLevel(a, b))
-                        .map(([label, count]) => (
-                          <Item
-                            key={label}
-                            className="flex w-fit flex-row items-center gap-2"
-                          >
-                            <ItemTitle>
-                              <span className="font-bold">{count}</span>
-                              {" "}⨉{" "}
-                              <span
-                                className={cn(
-                                  "3xs:text-lg border-accent inline-block rounded border p-2 text-sm",
-                                  getFeatureLevelClassName(label),
-                                )}
-                              >
-                                {label}
-                              </span>
-                            </ItemTitle>
-                          </Item>
-                        ))}
-                    </ItemGroup>
-                  )}
-                </ItemContent>
-              </Item>
-            ) : null}
-            {!isLastFeature && isCampable && (kmsTravelled || daySummary) ? (
-              <>
-                <ItemSeparator className="bg-level-neutral-border" />
-                <Day dayCounter={dayCounter++} />
-              </>
-            ) : null}
-          </Fragment>
-        );
-      })}
+      <Rows itinerary={river} prefix="" onPath view={view} />
+      {view.plan.last ? <DaySummary day={view.plan.last} /> : null}
     </ItemGroup>
   );
 }
 
-function distanceFromLastChecked(km: number, sortedChecked: number[]) {
-  if (sortedChecked.length === 0) {
-    return null;
-  }
-
-  let lastKm = Infinity;
-  for (const marker of sortedChecked) {
-    if (marker < km) {
-      break;
-    }
-    if (marker !== km) {
-      if (marker < lastKm) {
-        lastKm = marker;
-      }
-    }
-  }
-  const distance = lastKm - km;
-
-  return lastKm === Infinity ? null : Math.round(10 * distance) / 10;
+function Rows({
+  itinerary,
+  prefix,
+  onPath,
+  view,
+}: {
+  itinerary: Itinerary;
+  prefix: string;
+  onPath: boolean;
+  view: View;
+}) {
+  return buildRows(itinerary).map((row) => (
+    <RowView
+      key={row.km}
+      row={row}
+      rowKey={rowKey(prefix, row.km)}
+      onPath={onPath}
+      view={view}
+    />
+  ));
 }
 
-function countFeaturesEncountered(
-  km: number,
-  sortedChecked: number[],
-  features: RiverFeature[],
-) {
-  if (sortedChecked.length === 0) {
-    return null;
+function RowView({
+  row,
+  rowKey,
+  onPath,
+  view,
+}: {
+  row: Row;
+  rowKey: string;
+  onPath: boolean;
+  view: View;
+}) {
+  const stopPlan = onPath ? view.plan.stops.get(rowKey) : undefined;
+  if (!stopPlan) {
+    return (
+      <FeatureRow
+        km={row.km}
+        features={row.features}
+        rowKey={rowKey}
+        onPath={onPath}
+        view={view}
+      />
+    );
   }
 
-  let lastKm = Infinity;
-  for (const marker of sortedChecked) {
-    if (marker < km) {
-      break;
-    }
-    if (marker !== km) {
-      if (marker < lastKm) {
-        lastKm = marker;
-      }
-    }
-  }
-
-  return features.reduce<Record<string, number>>((acc, feature) => {
-    const featureKm = parseFloat(feature.km);
-    if (
-      featureKm > km &&
-      featureKm <= lastKm &&
-      feature.label !== "" &&
-      feature.label.indexOf("🏕") === -1 &&
-      feature.label.indexOf("🚙") === -1
-    ) {
-      if (!acc[feature.label]) {
-        acc[feature.label] = 0;
-      }
-      acc[feature.label]++;
-    }
-    return acc;
-  }, {});
-}
-
-function Day({ dayCounter }: { dayCounter: number }) {
+  // The day ends at the stop, before whatever starts at the same km.
+  const stops = row.features.filter(
+    (f) => isStop(f) || f.kind === "pointOfInterest",
+  );
+  const rest = row.features.filter(
+    (f) => !isStop(f) && f.kind !== "pointOfInterest",
+  );
   return (
-    <Item className="justify-center text-lg font-bold">Jour {dayCounter}</Item>
+    <>
+      <FeatureRow
+        km={row.km}
+        features={stops}
+        rowKey={rowKey}
+        onPath={onPath}
+        view={view}
+      />
+      <DayBreak stopPlan={stopPlan} />
+      <FeatureRow
+        km={row.km}
+        features={rest}
+        rowKey={rowKey}
+        onPath={onPath}
+        view={view}
+      />
+    </>
+  );
+}
+
+function isVisible(itinerary: Itinerary, filters: Filters): boolean {
+  return buildRows(itinerary).some(({ features }) =>
+    features.some((feature) =>
+      isFork(feature)
+        ? feature.routes.some((route) => isVisible(route, filters))
+        : filters[feature.kind],
+    ),
+  );
+}
+
+function FeatureRow({
+  km,
+  features,
+  rowKey,
+  onPath,
+  view,
+}: {
+  km: Km;
+  features: Feature[];
+  rowKey: string;
+  onPath: boolean;
+  view: View;
+}) {
+  const fork = features.find(isFork);
+  const lines = features.filter((f) => !isFork(f));
+  const checked = !!view.checked[rowKey];
+  const shown = lines.filter(
+    (f) => view.filters[f.kind as FilterKind] || (checked && isStop(f)),
+  );
+  const hidden = shown.length === 0;
+  const displayed = hidden ? lines : shown;
+  const accesses = displayed.filter((f) => f.kind === "access");
+  const isStopRow = displayed.some(isStop);
+
+  return (
+    <>
+      {lines.length > 0 ? (
+        <Item
+          variant="outline"
+          className={cn(
+            "hover:bg-muted bg-accent/50 2xs:flex-row flex-col items-start rounded-none pr-0 pl-1 transition-[opacity,max-height] duration-600",
+            hidden
+              ? "max-h-0 overflow-hidden border-0 py-0 opacity-0"
+              : "2xs:py-0.5 max-h-96 border py-2 opacity-100",
+            !onPath && "opacity-50",
+          )}
+        >
+          <ItemContent
+            className={cn(
+              "transition-max-height 3xs:flex-row flex w-full flex-col gap-2",
+              hidden ? "max-h-0 overflow-hidden" : "max-h-96",
+            )}
+          >
+            <span className="text-muted-foreground inline-block font-mono text-xs">
+              km&nbsp;{km.toFixed(1)}
+            </span>
+            <div className="flex flex-col flex-wrap gap-1">
+              {displayed.map((feature, i) => (
+                <FeatureLine key={i} feature={feature} />
+              ))}
+            </div>
+          </ItemContent>
+          <ItemActions className="2xs:ml-auto 2xs:flex-row flex-col">
+            {accesses.map(({ coordinates }) => {
+              const trip = view.trips[destination(coordinates)];
+              return trip && view.homeAddress ? (
+                <TripSummary
+                  key={destination(coordinates)}
+                  trip={trip}
+                  from={view.homeAddress}
+                  to={coordinates}
+                />
+              ) : null;
+            })}
+            {accesses.length > 0 ? (
+              <Directions onClick={view.openDirections} />
+            ) : null}
+            {isStopRow ? (
+              <label className="2xs:justify-end flex items-center">
+                <Input
+                  type="checkbox"
+                  checked={checked}
+                  disabled={!onPath}
+                  onChange={(event) =>
+                    view.onCheck(rowKey, event.target.checked)
+                  }
+                  className="size-6 cursor-pointer"
+                />
+              </label>
+            ) : null}
+          </ItemActions>
+        </Item>
+      ) : null}
+      {fork ? (
+        <ForkView fork={fork} forkKey={rowKey} onPath={onPath} view={view} />
+      ) : null}
+    </>
+  );
+}
+
+function FeatureLine({ feature }: { feature: Feature }) {
+  const label = getFeatureLabel(feature);
+  const name = getFeatureName(feature);
+  const length =
+    (feature.kind === "section" || feature.kind === "portage") &&
+    feature.length !== undefined
+      ? formatLength(feature.length)
+      : undefined;
+  const details = [length, feature.notes].filter(Boolean).join("; ");
+
+  return (
+    <div className="flex flex-row gap-2">
+      {label || name ? (
+        <ItemTitle>
+          {isWhitewater(feature) ? "🌊 " : null}
+          {[label, name].filter(Boolean).join(" ")}
+        </ItemTitle>
+      ) : null}
+      {details ? (
+        <ItemDescription className="text-foreground">{details}</ItemDescription>
+      ) : null}
+    </div>
+  );
+}
+
+function ForkView({
+  fork,
+  forkKey,
+  onPath,
+  view,
+}: {
+  fork: Fork;
+  forkKey: string;
+  onPath: boolean;
+  view: View;
+}) {
+  if (!fork.routes.some((route) => isVisible(route, view.filters))) {
+    return null;
+  }
+  const selected = selectedRoute(view.selection, forkKey, fork);
+
+  return (
+    <div
+      role="radiogroup"
+      aria-label={fork.name ?? "Choisis ta ligne"}
+      className={cn(
+        "border-level-neutral-border my-1 flex flex-col border-l-4",
+        !onPath && "opacity-50",
+      )}
+    >
+      <Item className="3xs:flex-row flex-col gap-2 py-1">
+        <span className="text-muted-foreground inline-block font-mono text-xs">
+          km {fork.km.toFixed(1)}
+        </span>
+        <ItemTitle>{fork.name ?? "Choisis ta ligne"}</ItemTitle>
+        {fork.notes ? <ItemDescription>{fork.notes}</ItemDescription> : null}
+      </Item>
+      {fork.routes.map((route, i) => (
+        <Fragment key={i}>
+          <label className="hover:bg-muted flex cursor-pointer items-center gap-2 px-4 py-1 text-sm">
+            <input
+              type="radio"
+              name={`fork:${forkKey}`}
+              checked={i === selected}
+              onChange={() => view.onSelect(forkKey, i)}
+              className="accent-level-neutral size-4"
+            />
+            <span className="font-medium">{route.name}</span>
+            {route.notes ? (
+              <span className="text-muted-foreground">{route.notes}</span>
+            ) : null}
+          </label>
+          <div className={cn("pl-2", i !== selected && "opacity-50")}>
+            <Rows
+              itinerary={route}
+              prefix={routePrefix(forkKey, i)}
+              onPath={onPath && i === selected}
+              view={view}
+            />
+          </div>
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
+function DayBreak({ stopPlan }: { stopPlan: StopPlan }) {
+  return (
+    <>
+      {stopPlan.ended ? <DaySummary day={stopPlan.ended} /> : null}
+      {stopPlan.next ? (
+        <>
+          <ItemSeparator className="bg-level-neutral-border" />
+          <Item className="justify-center text-lg font-bold">
+            Jour {stopPlan.next}
+          </Item>
+        </>
+      ) : null}
+    </>
+  );
+}
+
+function DaySummary({ day }: { day: Day }) {
+  return (
+    <Item>
+      <ItemContent className="items-center">
+        <ItemTitle className="flex flex-col 2xl:flex-row">
+          <span>totalisant</span>
+          <span
+            className={cn("text-lg", getDistanceLevelClassName(day.distance))}
+          >
+            {day.distance} km
+          </span>
+          {day.tallies.length > 0 && <span>avec</span>}
+        </ItemTitle>
+        {day.tallies.length > 0 && (
+          <ItemGroup className="flex-row flex-wrap justify-center">
+            {day.tallies.map(({ label, level, count }) => (
+              <Item
+                key={label}
+                className="flex w-fit flex-row items-center gap-2"
+              >
+                <ItemTitle>
+                  <span className="font-bold">{count}</span> ⨉{" "}
+                  <span
+                    className={cn(
+                      "3xs:text-lg border-accent inline-block rounded border p-2 text-sm",
+                      getFeatureLevelClassName(level),
+                    )}
+                  >
+                    {label}
+                  </span>
+                </ItemTitle>
+              </Item>
+            ))}
+          </ItemGroup>
+        )}
+      </ItemContent>
+    </Item>
   );
 }

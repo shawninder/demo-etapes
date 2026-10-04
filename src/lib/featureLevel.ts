@@ -1,3 +1,6 @@
+import type { Grade } from "@/data/rivers/types";
+import type { Feature } from "@/lib/itinerary";
+
 export type FeatureLevel =
   | "helpful"
   | "neutral"
@@ -19,11 +22,12 @@ const featureLevelOrder: FeatureLevel[] = [
   "impassable",
 ];
 
-export function compareFeatureLevel(a: string, b: string): number {
-  const levelA = getFeatureLevel(a);
-  const levelB = getFeatureLevel(b);
-  const rankA = levelA ? featureLevelOrder.indexOf(levelA) : -1;
-  const rankB = levelB ? featureLevelOrder.indexOf(levelB) : -1;
+export function compareFeatureLevel(
+  a: FeatureLevel | null,
+  b: FeatureLevel | null,
+): number {
+  const rankA = a ? featureLevelOrder.indexOf(a) : -1;
+  const rankB = b ? featureLevelOrder.indexOf(b) : -1;
   return rankA - rankB;
 }
 
@@ -84,39 +88,32 @@ function ledgeLevel(classNum: number): FeatureLevel {
   return "extreme";
 }
 
-const unratedTypeLevels: Record<string, FeatureLevel> = {
-  EV: "helpful",
-  P: "active",
-  K: "impassable",
-  C: "impassable",
-};
-
-const labelPattern = /^([A-Z]+)(\d+)?(?:-(\d+))?/;
-
-export function getFeatureLevel(label: string): FeatureLevel | null {
-  const match = labelPattern.exec(label.trim());
-  if (!match) return null;
-
-  const [, type, low, high] = match;
-  const classNum = high
-    ? parseInt(high, 10)
-    : low
-      ? parseInt(low, 10)
-      : undefined;
-
-  if (classNum === undefined) {
-    return unratedTypeLevels[type] ?? null;
-  }
-
-  if (type === "R") return rapidLevels[classNum] ?? "impassable";
-  if (type === "S") return ledgeLevel(classNum);
-  if (type === "C") return classNum >= 1 ? "extreme" : "impassable";
-
-  return null;
+function highestClass(grade: Grade | undefined) {
+  return Array.isArray(grade) ? grade[1] : grade;
 }
 
-export function getFeatureLevelClassName(label: string): string {
-  const level = getFeatureLevel(label);
+export function getFeatureLevel(feature: Feature): FeatureLevel | null {
+  if (feature.kind === "portage") return "active";
+  if (feature.kind !== "section") return null;
+
+  const classNum = highestClass(feature.class);
+  switch (feature.type) {
+    case "swift":
+      return "helpful";
+    case "rapid":
+      return classNum === undefined
+        ? null
+        : (rapidLevels[classNum] ?? "impassable");
+    case "ledge":
+      return classNum === undefined ? null : ledgeLevel(classNum);
+    case "waterfall":
+      return classNum !== undefined && classNum >= 1 ? "extreme" : "impassable";
+    default:
+      return null;
+  }
+}
+
+export function getFeatureLevelClassName(level: FeatureLevel | null): string {
   return level ? featureLevelClassNames[level].join(" ") : "";
 }
 

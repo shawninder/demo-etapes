@@ -4,8 +4,8 @@ export default {
     width: 500,
     height: 500,
   },
-  checkedKm: ["410", "396.7", "384"],
-  scrollY: 400,
+  checkedKm: ["140.4", "120"],
+  scrollY: 5400,
   outputPath: {
     light: "public/screenshot-light.png",
     dark: "public/screenshot-dark.png",

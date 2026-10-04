@@ -1,3 +1,6 @@
+import { Apple, MapPin, Navigation, type LucideIcon } from "lucide-react";
+import type { Coordinates } from "@/data/rivers/types";
+
 const API_KEY = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY;
 const CACHE_KEY = "directionsCache";
 
@@ -106,3 +109,43 @@ export function formatTrip({ km, seconds }: Trip) {
       : `${minutes} min`;
   return `${Math.round(km)} km, ~${duration}`;
 }
+
+export type DirectionsLink = {
+  name: string;
+  icon: LucideIcon;
+  href: (from: string, to: Coordinates) => string;
+};
+
+export const directionsLinks: DirectionsLink[] = [
+  {
+    name: "Google Maps",
+    icon: MapPin,
+    href: (from, { lat, lon }) =>
+      `https://www.google.com/maps/dir/?${new URLSearchParams({
+        api: "1",
+        origin: from,
+        destination: `${lat},${lon}`,
+        travelmode: "driving",
+      })}`,
+  },
+  {
+    name: "Apple Plans",
+    icon: Apple,
+    href: (from, { lat, lon }) =>
+      `https://maps.apple.com/?${new URLSearchParams({
+        saddr: from,
+        daddr: `${lat},${lon}`,
+        dirflg: "d",
+      })}`,
+  },
+  {
+    // Waze always starts from the current location.
+    name: "Waze",
+    icon: Navigation,
+    href: (_, { lat, lon }) =>
+      `https://waze.com/ul?${new URLSearchParams({
+        ll: `${lat},${lon}`,
+        navigate: "yes",
+      })}`,
+  },
+];

@@ -50,7 +50,7 @@ export default function RootLayout({
               <MessageCircleMore className="size-5" />
             </Button>
           </Link>
-          <div className="my-16 text-xs">
+          <div className="my-16 text-center text-xs">
             Merci à{" "}
             <Link
               target="_blank"

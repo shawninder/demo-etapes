@@ -1,8 +1,8 @@
 import broadback from "./broadback";
-import type { RiverFeature } from "./RiverFeature";
+import type { River } from "./types";
 
-const rivers: { [key: string]: RiverFeature[] } = {
-  broadback,
-};
+const rivers: Record<string, River> = Object.fromEntries(
+  [broadback].map((river) => [river.slug, river]),
+);
 
 export default rivers;

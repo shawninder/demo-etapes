@@ -57,13 +57,13 @@ export default function Home() {
       </p>
 
       <ItemGroup className="capitalize">
-        {Object.keys(rivers).map((slug) => (
+        {Object.values(rivers).map(({ slug, name }) => (
           <Link key={slug} href={`/${slug}`} className="w-full">
             <Item
               variant="muted"
               className="bg-level-neutral-bg border-level-neutral-border text-level-neutral-text hover:bg-level-helpful-bg hover:border-level-helpful-border hover:text-level-helpful-text 2xs:text-2xl"
             >
-              {slug}
+              {name}
             </Item>
           </Link>
         ))}
