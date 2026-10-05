@@ -32,7 +32,7 @@ export function getFeatureLabel(feature: Feature): string | null {
     case "access":
       return "🚙";
     case "campsite":
-      return `🏕${feature.size ?? ""}${feature.quality ?? ""}${feature.unconfirmed ? "?" : ""}`;
+      return `🏕 ${feature.size ?? ""}${feature.quality ?? ""}${feature.unconfirmed ? "?" : ""}`;
     case "portage":
       return "P";
     case "section": {
