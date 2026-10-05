@@ -34,7 +34,11 @@ const filterKinds: { kind: FilterKind; icon: ReactNode; title: string }[] = [
   { kind: "access", icon: "🚙", title: "Accès routiers" },
   { kind: "campsite", icon: "🏕", title: "Campings" },
   { kind: "section", icon: "🌊", title: "Rapides, seuils et lacs" },
-  { kind: "portage", icon: <PortageIcon className="text-level-active-text" />, title: "Portages" },
+  {
+    kind: "portage",
+    icon: <PortageIcon className="text-level-active-text" />,
+    title: "Portages",
+  },
   { kind: "pointOfInterest", icon: "📍", title: "Points d'intérêt" },
 ];
 
@@ -125,8 +129,8 @@ export default function RiverView({ river }: { river: River }) {
         homeAddress={homeAddress}
         onSave={saveHomeAddress}
       />
-      <Item className="my-4 justify-end py-0.5">
-        <ItemActions className="flex-wrap justify-end">
+      <Item className="2xs:flex-row flex-col pr-1">
+        <ItemActions className="flex-wrap justify-start">
           {filterKinds.map(({ kind, icon, title }) => (
             <Button
               key={kind}
@@ -142,8 +146,6 @@ export default function RiverView({ river }: { river: River }) {
             </Button>
           ))}
         </ItemActions>
-      </Item>
-      <Item className="2xs:flex-row flex-col pr-1">
         <ItemContent>
           <ItemDescription className="text-level-neutral-text 2xs:text-right text-center text-lg">
             Coche tes dodos
