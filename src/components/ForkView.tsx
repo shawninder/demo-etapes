@@ -1,5 +1,6 @@
 "use client";
 
+import { Split } from "lucide-react";
 import type { Fork, Itinerary } from "@/data/rivers/types";
 import { Item, ItemDescription, ItemTitle } from "@/components/ui/item";
 import { buildRows, isFork, routePrefix, selectedRoute } from "@/lib/itinerary";
@@ -44,6 +45,11 @@ export default function ForkView({
           km {fork.km.toFixed(1)}
         </span>
         <ItemTitle className="font-semibold">
+          <Split
+            role="img"
+            aria-label="Option"
+            className="text-level-neutral-text size-[1.25em] rotate-180"
+          />
           {fork.name ?? "Choisis ta ligne"}
         </ItemTitle>
         {fork.notes ? <ItemDescription>{fork.notes}</ItemDescription> : null}

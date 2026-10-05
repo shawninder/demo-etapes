@@ -10,6 +10,7 @@ export function formatLength(length: Metres) {
 }
 
 export const PORTAGE_KEY = "P";
+export const LAKE_KEY = "lake";
 
 const sectionPrefixes: Record<SectionType, string | null> = {
   calm: null,
@@ -37,9 +38,11 @@ export function getFeatureLabel(feature: Feature): string | null {
       return `🏕 ${feature.size ?? ""}${feature.quality ?? ""}${feature.unconfirmed ? "?" : ""}`;
     case "portage":
       return PORTAGE_KEY;
+    case "pointOfInterest":
+      return "📍";
     case "section": {
       const prefix = sectionPrefixes[feature.type];
-      if (!prefix) return null;
+      if (!prefix) return feature.type === "lake" ? LAKE_KEY : null;
       return feature.class === undefined
         ? prefix
         : `${prefix}${formatGrade(feature.class)}`;
@@ -51,6 +54,9 @@ export function getFeatureLabel(feature: Feature): string | null {
 
 export function getFeatureName(feature: Feature): string | undefined {
   if (feature.kind === "portage") return undefined;
+  if (feature.kind === "section" && feature.type === "lake") {
+    return feature.name;
+  }
   if (feature.kind === "section" && !sectionPrefixes[feature.type]) {
     return feature.name ?? sectionNames[feature.type];
   }
