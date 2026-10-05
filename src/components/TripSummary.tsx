@@ -33,6 +33,7 @@ export default function TripSummary({
   return (
     <HoverCard>
       <HoverCardTrigger
+        delay={0}
         render={<span tabIndex={0} />}
         className="text-muted-foreground cursor-default text-right text-xs underline decoration-dotted underline-offset-2"
       >

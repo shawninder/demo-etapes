@@ -180,14 +180,14 @@ export default function RiverView({ river }: { river: River }) {
           ))}
         </ItemActions>
       </Item>
-      <Item>
+      <Item className="pr-1">
         <ItemContent>
           <ItemDescription className="text-level-neutral-text text-right text-xl">
             Coche tes dodos
           </ItemDescription>
         </ItemContent>
         <ItemActions>
-          <CornerRightDown className="text-level-neutral-text mr-1" />
+          <CornerRightDown className="text-level-neutral-text" />
         </ItemActions>
       </Item>
       <Rows itinerary={river} prefix="" onPath view={view} />
@@ -314,7 +314,6 @@ function FeatureRow({
             hidden
               ? "max-h-0 overflow-hidden border-0 py-0 opacity-0"
               : "2xs:py-0.5 max-h-96 border py-2 opacity-100",
-            !onPath && "opacity-50",
           )}
         >
           <ItemContent
@@ -381,7 +380,7 @@ function FeatureLine({ feature }: { feature: Feature }) {
   const details = [length, feature.notes].filter(Boolean).join("; ");
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row items-start gap-2">
       {label || name ? (
         <ItemTitle>
           {isWhitewater(feature) ? "🌊 " : null}
@@ -415,34 +414,41 @@ function ForkView({
     <div
       role="radiogroup"
       aria-label={fork.name ?? "Choisis ta ligne"}
-      className={cn(
-        "border-level-neutral-border my-1 flex flex-col border-l-4",
-        !onPath && "opacity-50",
-      )}
+      className={cn("my-1 flex flex-col")}
     >
-      <Item className="3xs:flex-row flex-col gap-2 py-1">
+      <Item className="3xs:flex-row flex-col gap-2 py-1 pl-1">
         <span className="text-muted-foreground inline-block font-mono text-xs">
           km {fork.km.toFixed(1)}
         </span>
-        <ItemTitle>{fork.name ?? "Choisis ta ligne"}</ItemTitle>
+        <ItemTitle className="font-semibold">
+          {fork.name ?? "Choisis ta ligne"}
+        </ItemTitle>
         {fork.notes ? <ItemDescription>{fork.notes}</ItemDescription> : null}
       </Item>
       {fork.routes.map((route, i) => (
-        <Fragment key={i}>
-          <label className="hover:bg-muted flex cursor-pointer items-center gap-2 px-4 py-1 text-sm">
+        <div
+          key={i}
+          className={cn(
+            "border-l-4",
+            onPath && i === selected
+              ? "border-level-neutral-border"
+              : "border-background-alt",
+          )}
+        >
+          <label className="hover:bg-muted flex cursor-pointer items-center gap-2 px-4 py-1 text-xs">
             <input
               type="radio"
               name={`fork:${forkKey}`}
               checked={i === selected}
               onChange={() => view.onSelect(forkKey, i)}
-              className="accent-level-neutral size-4"
+              className="accent-level-neutral size-3 cursor-pointer"
             />
             <span className="font-medium">{route.name}</span>
             {route.notes ? (
               <span className="text-muted-foreground">{route.notes}</span>
             ) : null}
           </label>
-          <div className={cn("pl-2", i !== selected && "opacity-50")}>
+          <div className="pl-2">
             <Rows
               itinerary={route}
               prefix={routePrefix(forkKey, i)}
@@ -450,7 +456,7 @@ function ForkView({
               view={view}
             />
           </div>
-        </Fragment>
+        </div>
       ))}
     </div>
   );
