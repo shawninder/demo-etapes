@@ -62,7 +62,7 @@ export default function FeatureRow({
               ))}
             </div>
           </ItemContent>
-          <ItemActions className="2xs:ml-auto 2xs:flex-row flex-col">
+          <ItemActions className="2xs:ml-auto 2xs:flex-row 2xs:w-auto w-full flex-col">
             {accesses.map(({ coordinates }) => {
               const trip = view.trips[destination(coordinates)];
               return trip && view.homeAddress ? (

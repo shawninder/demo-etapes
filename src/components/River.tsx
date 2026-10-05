@@ -23,7 +23,7 @@ import {
 } from "@/lib/view";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { CornerRightDown } from "lucide-react";
+import { CornerRightDown, MoveDown } from "lucide-react";
 import HomeAddressDialog from "@/components/HomeAddressDialog";
 import Rows from "@/components/Rows";
 import DaySummary from "@/components/DaySummary";
@@ -142,14 +142,15 @@ export default function RiverView({ river }: { river: River }) {
           ))}
         </ItemActions>
       </Item>
-      <Item className="pr-1">
+      <Item className="2xs:flex-row flex-col pr-1">
         <ItemContent>
-          <ItemDescription className="text-level-neutral-text text-right text-xl">
+          <ItemDescription className="text-level-neutral-text 2xs:text-right text-center text-lg">
             Coche tes dodos
           </ItemDescription>
         </ItemContent>
-        <ItemActions>
-          <CornerRightDown className="text-level-neutral-text" />
+        <ItemActions className="text-level-neutral-text">
+          <CornerRightDown className="2xs:block hidden" />
+          <MoveDown className="2xs:hidden block" />
         </ItemActions>
       </Item>
       <Rows itinerary={river} prefix="" onPath view={view} />
