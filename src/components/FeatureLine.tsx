@@ -1,6 +1,7 @@
 "use client";
 
 import { ItemDescription, ItemTitle } from "@/components/ui/item";
+import FeatureLabel from "@/components/FeatureLabel";
 import {
   formatLength,
   getFeatureLabel,
@@ -34,10 +35,10 @@ export default function FeatureLine({ feature }: { feature: Feature }) {
                 getFeatureLevelClassName(level),
               )}
             >
-              {label}
+              <FeatureLabel label={label} />
             </span>
           ) : (
-            label
+            label && <FeatureLabel label={label} />
           )}
           {name}
         </ItemTitle>

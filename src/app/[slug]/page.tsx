@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MoveLeft } from "lucide-react";
+import { Map, MoveLeft, WavesHorizontal } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import River from "@/components/River";
 import rivers from "@/data/rivers";
 import { Item, ItemContent, ItemTitle } from "@/components/ui/item";
@@ -32,26 +33,33 @@ export default async function RiverPage({
         </Item>
       </h1>
       {river.gaugeUrl || river.mapUrls.length > 0 ? (
-        <nav className="mb-4 flex flex-wrap justify-center gap-4 text-sm">
+        <nav className="mb-4 flex flex-wrap justify-center gap-2">
           {river.gaugeUrl ? (
             <Link
               target="_blank"
               href={river.gaugeUrl}
-              className="text-level-neutral-text hover:text-level-helpful-text"
+              aria-label="Niveau d'eau"
+              title="Niveau d'eau"
+              className={buttonVariants({ variant: "outline", size: "icon-lg" })}
             >
-              Niveau d&apos;eau
+              <WavesHorizontal />
             </Link>
           ) : null}
-          {river.mapUrls.map((url, i) => (
-            <Link
-              key={url}
-              target="_blank"
-              href={url}
-              className="text-level-neutral-text hover:text-level-helpful-text"
-            >
-              Carte-guide{river.mapUrls.length > 1 ? ` ${i + 1}` : ""}
-            </Link>
-          ))}
+          {river.mapUrls.map((url, i) => {
+            const label = `Carte-guide${river.mapUrls.length > 1 ? ` ${i + 1}` : ""}`;
+            return (
+              <Link
+                key={url}
+                target="_blank"
+                href={url}
+                aria-label={label}
+                title={label}
+                className={buttonVariants({ variant: "outline", size: "icon-lg" })}
+              >
+                <Map />
+              </Link>
+            );
+          })}
         </nav>
       ) : null}
       <River river={river} />

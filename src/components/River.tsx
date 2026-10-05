@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { River } from "@/data/rivers/types";
 import {
   Item,
@@ -24,16 +24,17 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { CornerRightDown, MoveDown } from "lucide-react";
+import { PortageIcon } from "@/components/icons/PortageIcon";
 import HomeAddressDialog from "@/components/HomeAddressDialog";
 import Rows from "@/components/Rows";
 import DaySummary from "@/components/DaySummary";
 import { getTrips, type Trip } from "@/lib/directions";
 
-const filterKinds: { kind: FilterKind; icon: string; title: string }[] = [
+const filterKinds: { kind: FilterKind; icon: ReactNode; title: string }[] = [
   { kind: "access", icon: "🚙", title: "Accès routiers" },
   { kind: "campsite", icon: "🏕", title: "Campings" },
   { kind: "section", icon: "🌊", title: "Rapides, seuils et lacs" },
-  { kind: "portage", icon: "P", title: "Portages" },
+  { kind: "portage", icon: <PortageIcon />, title: "Portages" },
   { kind: "pointOfInterest", icon: "📍", title: "Points d'intérêt" },
 ];
 

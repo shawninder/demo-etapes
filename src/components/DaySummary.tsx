@@ -1,6 +1,7 @@
 "use client";
 
 import { Item, ItemGroup, ItemContent, ItemTitle } from "@/components/ui/item";
+import FeatureLabel from "@/components/FeatureLabel";
 import {
   getDistanceLevelClassName,
   getFeatureLevelClassName,
@@ -36,7 +37,7 @@ export default function DaySummary({ day }: { day: Day }) {
                       getFeatureLevelClassName(level),
                     )}
                   >
-                    {label}
+                    <FeatureLabel label={label} />
                   </span>
                 </ItemTitle>
               </Item>

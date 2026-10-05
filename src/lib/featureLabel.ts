@@ -9,6 +9,8 @@ export function formatLength(length: Metres) {
   return length < 1000 ? `${length} m` : `${length / 1000} km`;
 }
 
+export const PORTAGE_KEY = "P";
+
 const sectionPrefixes: Record<SectionType, string | null> = {
   calm: null,
   lake: null,
@@ -34,7 +36,7 @@ export function getFeatureLabel(feature: Feature): string | null {
     case "campsite":
       return `🏕 ${feature.size ?? ""}${feature.quality ?? ""}${feature.unconfirmed ? "?" : ""}`;
     case "portage":
-      return "P";
+      return PORTAGE_KEY;
     case "section": {
       const prefix = sectionPrefixes[feature.type];
       if (!prefix) return null;
