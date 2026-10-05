@@ -34,7 +34,7 @@ const filterKinds: { kind: FilterKind; icon: ReactNode; title: string }[] = [
   { kind: "access", icon: "🚙", title: "Accès routiers" },
   { kind: "campsite", icon: "🏕", title: "Campings" },
   { kind: "section", icon: "🌊", title: "Rapides, seuils et lacs" },
-  { kind: "portage", icon: <PortageIcon />, title: "Portages" },
+  { kind: "portage", icon: <PortageIcon className="text-level-active-text" />, title: "Portages" },
   { kind: "pointOfInterest", icon: "📍", title: "Points d'intérêt" },
 ];
 
