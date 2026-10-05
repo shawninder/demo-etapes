@@ -4,15 +4,16 @@ import { ItemDescription, ItemTitle } from "@/components/ui/item";
 import FeatureLabel from "@/components/FeatureLabel";
 import {
   formatLength,
+  getFeatureIcon,
   getFeatureLabel,
   getFeatureName,
-  isWhitewater,
 } from "@/lib/featureLabel";
 import { getFeatureLevel, getFeatureLevelClassName } from "@/lib/featureLevel";
 import type { Feature } from "@/lib/itinerary";
 import { cn } from "@/lib/utils";
 
 export default function FeatureLine({ feature }: { feature: Feature }) {
+  const icon = getFeatureIcon(feature);
   const label = getFeatureLabel(feature);
   const name = getFeatureName(feature);
   const level = getFeatureLevel(feature);
@@ -24,10 +25,10 @@ export default function FeatureLine({ feature }: { feature: Feature }) {
   const details = [length, feature.notes].filter(Boolean).join("; ");
 
   return (
-    <div className="flex flex-row items-start gap-2">
-      {label || name ? (
+    <div className="flex flex-row items-baseline gap-2">
+      {icon || label || name ? (
         <ItemTitle className="shrink-0 whitespace-nowrap">
-          {isWhitewater(feature) ? "🌊" : null}
+          {icon && <span>{icon}</span>}
           {label && level ? (
             <span
               className={cn(
@@ -38,13 +39,19 @@ export default function FeatureLine({ feature }: { feature: Feature }) {
               <FeatureLabel label={label} />
             </span>
           ) : (
-            label && <FeatureLabel label={label} />
+            label && (
+              <span>
+                <FeatureLabel label={label} />
+              </span>
+            )
           )}
-          {name}
+          {name && <span>{name}</span>}
         </ItemTitle>
       ) : null}
       {details ? (
-        <ItemDescription className="min-w-0 flex-1 text-foreground">{details}</ItemDescription>
+        <ItemDescription className="text-foreground min-w-0 flex-1">
+          {details}
+        </ItemDescription>
       ) : null}
     </div>
   );

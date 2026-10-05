@@ -6,7 +6,7 @@ export function formatGrade(grade: Grade) {
 }
 
 export function formatLength(length: Metres) {
-  return length < 1000 ? `${length} m` : `${length / 1000} km`;
+  return length < 1000 ? `${length}m` : `${length / 1000}km`;
 }
 
 export const PORTAGE_KEY = "P";
@@ -32,14 +32,13 @@ const sectionNames: Record<SectionType, string> = {
 
 export function getFeatureLabel(feature: Feature): string | null {
   switch (feature.kind) {
-    case "access":
-      return "🚙";
     case "campsite":
-      return `🏕 ${feature.size ?? ""}${feature.quality ?? ""}${feature.unconfirmed ? "?" : ""}`;
+      return (
+        `${feature.size ?? ""}${feature.quality ?? ""}${feature.unconfirmed ? "?" : ""}` ||
+        null
+      );
     case "portage":
       return PORTAGE_KEY;
-    case "pointOfInterest":
-      return "📍";
     case "section": {
       const prefix = sectionPrefixes[feature.type];
       if (!prefix) return feature.type === "lake" ? LAKE_KEY : null;
@@ -47,6 +46,21 @@ export function getFeatureLabel(feature: Feature): string | null {
         ? prefix
         : `${prefix}${formatGrade(feature.class)}`;
     }
+    default:
+      return null;
+  }
+}
+
+export function getFeatureIcon(feature: Feature): string | null {
+  switch (feature.kind) {
+    case "access":
+      return "🚙";
+    case "campsite":
+      return "🏕";
+    case "pointOfInterest":
+      return "📍";
+    case "section":
+      return isWhitewater(feature) ? "🌊" : null;
     default:
       return null;
   }

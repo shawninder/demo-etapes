@@ -86,7 +86,7 @@ export default function FeatureRow({
                   onChange={(event) =>
                     view.onCheck(rowKey, event.target.checked)
                   }
-                  className="size-6 cursor-pointer"
+                  className="size-5 cursor-pointer"
                 />
               </label>
             ) : null}
