@@ -26,7 +26,7 @@ export default function FeatureLine({ feature }: { feature: Feature }) {
   return (
     <div className="flex flex-row items-start gap-2">
       {label || name ? (
-        <ItemTitle>
+        <ItemTitle className="shrink-0 whitespace-nowrap">
           {isWhitewater(feature) ? "🌊" : null}
           {label && level ? (
             <span
@@ -44,7 +44,7 @@ export default function FeatureLine({ feature }: { feature: Feature }) {
         </ItemTitle>
       ) : null}
       {details ? (
-        <ItemDescription className="text-foreground">{details}</ItemDescription>
+        <ItemDescription className="min-w-0 flex-1 text-foreground">{details}</ItemDescription>
       ) : null}
     </div>
   );
